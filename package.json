@@ -1,0 +1,24 @@
+{
+  "name": "balancedesk-app",
+  "version": "1.0.0",
+  "description": "A versatile and intuitive financial management software designed to help organizations track and manage their budgets. With support for hierarchical organization, graphical insights, and secure local data encryption, it ensures streamlined and reliable financial workflows.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^33.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patrickalderson89/BalanceDesk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/patrickalderson89/BalanceDesk/issues"
+  },
+  "homepage": "https://github.com/patrickalderson89/BalanceDesk#readme"
+}
