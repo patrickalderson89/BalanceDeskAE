@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/patrickalderson89/BalanceDesk/issues"
   },
-  "homepage": "https://github.com/patrickalderson89/BalanceDesk#readme"
+  "homepage": "https://github.com/patrickalderson89/BalanceDesk#readme",
+  "dependencies": {
+    "i18next": "^24.1.0",
+    "i18next-electron-fs-backend": "^3.0.2"
+  }
 }

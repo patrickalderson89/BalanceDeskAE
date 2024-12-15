@@ -1,19 +1,23 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const path = require("node:path");
+
+// Prevent the app from loading a default menu as it is not needed.
+Menu.setApplicationMenu(null);
 
 const createWindow = () => {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1200,
+        height: 800,
+        icon: path.join(__dirname, "assets/icons/logo.ico"),
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
         },
     });
 
     // and load the index.html of the app.
-    mainWindow.loadFile("index.html");
+    mainWindow.loadFile("src/pages/dashboard/dashboard.html");
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools();
