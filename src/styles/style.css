@@ -18,7 +18,7 @@
     position: fixed;
     left: 0;
     top: 0;
-    height: 100%;
+    height: 95%;
     width: 150px;
     background-color: #2f2f2f;
     color: white;
@@ -30,8 +30,19 @@
     &.sidebar-closed {
         width: 80px;
 
-        .logo-img {
+        .sidebar-logo {
             display: none;
+        }
+
+        .top-item,
+        .nav-item,
+        .bottom-item {
+            justify-content: center;
+        }
+
+        .nav-icon,
+        .bottom-icon {
+            margin-right: unset;
         }
     }
 
@@ -40,7 +51,7 @@
         display: flex;
         flex-direction: column;
         /* Arrange button and logo vertically */
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
         height: 25%;
         padding: 10px;
@@ -101,7 +112,7 @@
     .nav-item {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         padding: 8% 5%;
         width: 90%;
         text-decoration: none;
@@ -129,7 +140,7 @@
     .bottom-item {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         padding: 8% 5%;
         width: 90%;
         text-decoration: none;
@@ -150,9 +161,31 @@
         border-radius: 5px;
     }
 
+    /* Active item styling */
+    .item-active {
+        background-color: #8d8989;
+        /* Subtle grayish background */
+        border-radius: 5px;
+        /* Rounded corners */
+        color: #fff;
+        /* White text for contrast */
+        transition: background-color 0.3s ease;
+        /* Smooth transition for background */
+        font-weight: 700;
+    }
+
+    /* Hover effect for active item */
+    .item-active:hover {
+        background-color: #6a6767;
+        /* Darker background color on hover */
+        cursor: pointer;
+        /* Indicate interactivity */
+    }
+
     /* Hide text when sidebar is closed */
     &.sidebar-closed .nav-item span,
-    &.sidebar-closed .bottom-item span {
+    &.sidebar-closed .bottom-item span,
+    &.sidebar-closed .top-item span {
         display: none;
     }
 
@@ -188,6 +221,7 @@ footer {
     /* Stick it to the bottom */
     left: 0;
     width: 100%;
+    height: 5%;
     font-size: 0.9rem;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 }

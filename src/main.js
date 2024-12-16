@@ -5,11 +5,13 @@ const path = require("path");
 // Prevent the app from loading a default menu as it is not needed.
 Menu.setApplicationMenu(null);
 
+let mainWindow = null;
 const createWindow = () => {
     // Create the browser window.
-    const mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 1200,
         height: 800,
+        title: app.getName(),
         icon: path.join(__dirname, "assets/icons/logo.ico"),
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
@@ -19,9 +21,10 @@ const createWindow = () => {
     // and load the index.html of the app.
     mainWindow.loadFile(path.join(__dirname, "index.html"));
 
-    // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
-
+    // Clean up when the window is closed
+    mainWindow.on("closed", () => {
+        mainWindow = null;
+    });
 
     // Handle "get-app-info" event and return app info
     ipcMain.handle("get-app-info", () => {
@@ -30,6 +33,9 @@ const createWindow = () => {
             version: app.getVersion(),
         };
     });
+
+    // Open the DevTools.
+    // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished

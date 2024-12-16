@@ -1,0 +1,1 @@
+console.log("Trash page script ready!");
