@@ -7,15 +7,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     var currentPage = null;
 
     // Set the name for the app in the sidebar
-    if (typeof Utils === "function") {
-        if (appinfo) {
-            Utils.setElementText("sidebar-app-name", await appinfo.name());
-        } else {
-            console.error("Unable to retrieve app info");
-        }
-    } else {
+    if (typeof Utils !== "function") {
         console.error("Utils class is not defined.");
+        return;
     }
+    Utils.setElementText("sidebar-app-name", await appinfo.name());
 
     // Sidebar toggle button
     sidebarToggleBtn.addEventListener("click", function () {
@@ -51,12 +47,12 @@ document.addEventListener("DOMContentLoaded", async function () {
                     if (bases.length > 0) {
                         bases[0].remove();
                     }
-                    console.log("Clicked link's href:", href); // Log the link's href
-                    await loadHTMLContent(href, "main-content"); // Use await to ensure content is loaded before proceeding
-                    console.log(currentPage);
+                    console.log(`Clicked link's href: ${href}.`); // Log the link's href
+                    const success = await Utils.loadPageHTMLContent(href, "main-content"); // Use await to ensure content is loaded before proceeding
 
                     // Update the sidebar UI only if the fetch succeeded
-                    if (currentPage === href) {
+                    if (success) {
+                        currentPage = href;
                         updateActiveItem();
                     }
                 }
@@ -65,40 +61,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
         });
     });
-
-    // Function to load HTML content dynamically
-    async function loadHTMLContent(url, containerId) {
-        try {
-            const response = await fetch(url);
-            const html = await response.text();
-
-            const container = document.getElementById(containerId);
-            container.innerHTML = html;
-
-            // Locate the dynamically loaded page container
-            let pageContainer = container.querySelector("div[id$='-page']");
-            if (!pageContainer) {
-                console.warn("No valid page container found in the loaded content. Falling back to default container.");
-                pageContainer = container;
-            }
-
-            // Re-execute scripts within the loaded content
-            container.querySelectorAll("script").forEach((oldScript) => {
-                const newScript = document.createElement("script");
-                newScript.src = oldScript.src || ""; // Handle external scripts
-                newScript.textContent = oldScript.textContent; // Handle inline scripts
-                newScript.async = oldScript.async; // Preserve async attribute
-
-                // Append the new script inside the specific page container
-                pageContainer.appendChild(newScript);
-                oldScript.remove();
-            });
-
-            currentPage = url; // Update the current page URL
-        } catch (error) {
-            console.error("Error loading content:", error);
-        }
-    }
 
     // Function to update the active item in the sidebar
     function updateActiveItem() {
