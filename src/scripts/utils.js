@@ -13,7 +13,7 @@ class Utils {
         const { appinfo } = window;  // appinfo is exposed through contextBridge
 
         if (!appinfo) {
-            console.error("appinfo is not available.");
+            console.warn("appinfo is not available.");
             return "";
         }
 
@@ -23,11 +23,11 @@ class Utils {
             } else if (type === "version") {
                 return await appinfo.version();
             } else {
-                console.error("Invalid app info type");
+                console.warn("Invalid app info type");
                 return "";
             }
         } catch (error) {
-            console.error("Error fetching app info:", error);
+            console.warn("Error fetching app info:", error);
             return "";
         }
     }
