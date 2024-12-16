@@ -21,3 +21,8 @@ contextBridge.exposeInMainWorld("appinfo", {
         return info.version;
     },
 });
+
+// Expose app urls
+contextBridge.exposeInMainWorld("urls", {
+    defaultPage: "pages/dashboard/dashboard.html",
+});
