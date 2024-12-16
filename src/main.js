@@ -1,6 +1,6 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, Menu, ipcMain } = require("electron");
-const path = require("node:path");
+const path = require("path");
 
 // Prevent the app from loading a default menu as it is not needed.
 Menu.setApplicationMenu(null);
@@ -17,10 +17,19 @@ const createWindow = () => {
     });
 
     // and load the index.html of the app.
-    mainWindow.loadFile("src/pages/dashboard/dashboard.html");
+    mainWindow.loadFile(path.join(__dirname, "index.html"));
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools();
+
+
+    // Handle "get-app-info" event and return app info
+    ipcMain.handle("get-app-info", () => {
+        return {
+            name: app.getName(),
+            version: app.getVersion(),
+        };
+    });
 };
 
 // This method will be called when Electron has finished
