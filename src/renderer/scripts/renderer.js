@@ -14,8 +14,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         return;
     }
 
-    const defaultPageLoaded = await Utils.loadPageHTMLContent(defaultPage, "main-content");
-    if (!defaultPageLoaded) {
-        console.error(`Unable to load default page: ${defaultPage}.`);
+    let currentPage = document.getElementById("current-page");
+    if (currentPage instanceof HTMLElement) {
+        currentPage.value = defaultPage;
+    } else {
+        console.error(`Unable to set default page to ${defaultPage}.`);
     }
 });

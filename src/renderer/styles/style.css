@@ -26,31 +26,10 @@
     flex-direction: column;
     transition: width 0.3s ease;
 
-    /* Sidebar when closed */
-    &.sidebar-closed {
-        width: 80px;
-
-        .sidebar-logo {
-            display: none;
-        }
-
-        .top-item,
-        .nav-item,
-        .bottom-item {
-            justify-content: center;
-        }
-
-        .nav-icon,
-        .bottom-icon {
-            margin-right: unset;
-        }
-    }
-
-    /* Sidebar Top: Logo */
+    /* Sidebar Top */
     .sidebar-top {
         display: flex;
         flex-direction: column;
-        /* Arrange button and logo vertically */
         justify-content: space-evenly;
         align-items: center;
         height: 25%;
@@ -73,22 +52,34 @@
         /* Space between button and logo */
     }
 
+    .top-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        row-gap: 0.3rem;
+        width: 100%;
+        text-decoration: none;
+        color: white;
+        font-size: 16px;
+        transition: opacity 0.3s ease;
+    }
+
+    .top-text {
+        text-align: center;
+    }
+
+    .top-icon {
+        width: 50%;
+        height: auto;
+        margin-right: 5%;
+    }
+
     .sidebar-toggle-btn img {
         width: 24px;
         /* Set the image size */
         height: auto;
         /* Maintain aspect ratio */
-    }
-
-    .sidebar-logo {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .logo-img {
-        width: 60%;
-        height: auto;
     }
 
     /* Middle Section: Navigation */
@@ -155,6 +146,7 @@
         margin-right: 5%;
     }
 
+    .top-item:hover,
     .nav-item:hover,
     .bottom-item:hover {
         background-color: #444;
@@ -182,19 +174,30 @@
         /* Indicate interactivity */
     }
 
-    /* Hide text when sidebar is closed */
-    &.sidebar-closed .nav-item span,
-    &.sidebar-closed .bottom-item span,
-    &.sidebar-closed .top-item span {
-        display: none;
-    }
+    /* Sidebar when closed */
+    &.sidebar-closed {
+        width: 80px;
 
-    /* Show icons only when sidebar is closed */
-    &.sidebar-closed .nav-icon,
-    &.sidebar-closed .bottom-icon {
-        display: block;
-        width: 50%;
-        /* Adjust icon size */
+        .top-item,
+        .nav-item,
+        .bottom-item {
+            justify-content: center;
+        }
+
+        .top-text,
+        .nav-text,
+        .bottom-text {
+            display: none;
+        }
+
+        .top-icon,
+        .nav-icon,
+        .bottom-icon {
+            display: block;
+            margin-right: unset;
+            width: 50%;
+            /* Adjust icon size */
+        }
     }
 }
 
@@ -226,6 +229,9 @@ footer {
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 }
 
+.hidden {
+    display: none;
+}
 
 /* Scrollbar Styling for Webkit-based Browsers */
 ::-webkit-scrollbar {
