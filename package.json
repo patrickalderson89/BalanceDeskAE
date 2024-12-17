@@ -1,9 +1,9 @@
 {
   "name": "balancedesk-app",
-  "productName": "BalanceDesk",
+  "productName": "BalanceDesk - Algos Edition",
   "version": "1.0.0",
   "description": "A versatile and intuitive financial management software designed to help organizations track and manage their budgets. With support for hierarchical organization, graphical insights, and secure local data encryption, it ensures streamlined and reliable financial workflows.",
-  "main": "src/main.js",
+  "main": "src/main/main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,6 +24,7 @@
   "homepage": "https://github.com/patrickalderson89/BalanceDesk#readme",
   "dependencies": {
     "i18next": "^24.1.0",
-    "i18next-electron-fs-backend": "^3.0.2"
+    "i18next-electron-fs-backend": "^3.0.2",
+    "sqlite3": "^5.1.7"
   }
 }
