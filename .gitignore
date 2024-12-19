@@ -1,4 +1,4 @@
 node_modules/
 package-lock.json
 
-src/main/database/sql/**/*.db
+src/main/database/sql/*.db

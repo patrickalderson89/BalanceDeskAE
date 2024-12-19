@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     // Retrieve the default page url or try navigating to the first available page in the sidebar
+    const { urls } = window; // urls is exposed through contextBridge
     const defaultPage = urls && urls.defaultPage
         ? await urls.defaultPage
         : document.querySelectorAll(".sidebar .nav-item").item(0)?.getAttribute("href") || null;

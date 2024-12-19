@@ -1,9 +1,9 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, dialog, ipcMain } = require("electron");
+const { app, BrowserWindow, Menu, dialog } = require("electron");
 const path = require("path");
-const { SRC_PATH, MAIN_PROCESS_PATH, RENDERER_PROCESS_PATH } = require(path.join(__dirname, "constants"));
+const { MAIN_PROCESS_PATH, RENDERER_PROCESS_PATH } = require(path.join(__dirname, "constants"));
 const { registerIpcHandlers } = require(path.join(MAIN_PROCESS_PATH, "ipc")); // Centralized import
-const { entitiesDb, appSettingsDb } = require(path.join(MAIN_PROCESS_PATH, "database"));
+const entitiesDb = require(path.join(MAIN_PROCESS_PATH, "database/EntitiesDb"));
 
 // Prevent the app from loading a default menu as it is not needed.
 Menu.setApplicationMenu(null);
@@ -51,30 +51,22 @@ app.whenReady().then(async () => {
     registerIpcHandlers(); // Register all IPC handlers
 
     // =============================
-    // Initialize core databases
+    // Initialize core database
     // =============================
-    const coreDatabases = [entitiesDb, appSettingsDb];
+    try {
+        await entitiesDb.init();
+    } catch (err) {
+        console.error(err.message);
 
-    for (const db of coreDatabases) {
-        const name = db.dbName;
-        try {
-            await db.init();
-            console.log(`${name} database initialized`);
-        } catch (err) {
-            console.error(`Error initializing ${name} database: ${err}`);
-
-            // Show an error dialog only after the main window is ready
-            await dialog.showMessageBox(mainWindow, {
-                type: "error",
-                title: "Errore durante l'inizializzazione del database",
-                message: "L'applicazione ha riscontrato un problema critico e non può essere avviata.",
-                buttons: ["Chiudi"]
-            }).then(() => {
-                app.quit();
-            });
-
-            break; // Stop at the first error
-        }
+        // Show an error dialog only after the main window is ready
+        await dialog.showMessageBox(mainWindow, {
+            type: "error",
+            title: "Errore durante l'inizializzazione del database",
+            message: "L'applicazione ha riscontrato un problema critico e non può essere avviata.",
+            buttons: ["Chiudi"]
+        }).then(() => {
+            app.quit();
+        });
     }
 
     mainWindow.show();
