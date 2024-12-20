@@ -2,9 +2,9 @@ const sqlite3 = require("sqlite3").verbose();
 const fs = require("fs/promises");
 const path = require("path");
 const Migrator = require("./Migrator");
-const QueryHelper = require("./QueryHelper");
+const SimpleORM = require("./SimpleORM");
 
-class EntitiesDb {
+class BalancedeskDb {
     constructor(dbName) {
         this.dbName = dbName;
         this.dbPath = path.join(__dirname, "sql", `${dbName}.db`);
@@ -13,7 +13,7 @@ class EntitiesDb {
         this.rollbacksPath = path.join(__dirname, "sql", "rollbacks");
         this.db = null; // Holds the database instance
         this.migrator = null; // Holds the Migrator instance
-        this.queryHelper = null; // Holds the QueryHelper instance
+        this.orm = null; // Holds the SimpleORM instance
     }
 
     /**
@@ -23,8 +23,8 @@ class EntitiesDb {
         try {
             const dbExists = await this.databaseFileExists();
             this.db = new sqlite3.Database(this.dbPath);
-            this.queryHelper = new QueryHelper(this.db);
-            this.migrator = new Migrator(this);
+            this.migrator = new Migrator(this.db, this.migrationsPath, this.rollbacksPath);
+            this.orm = new SimpleORM(this.db);
 
             if (!dbExists) {
                 await this.initializeDatabase();
@@ -37,10 +37,7 @@ class EntitiesDb {
             // Check if the database file exists and delete it if there was an error during initialization
             try {
                 await this.close(); // Close the database connection if it was opened
-
-                if (await this.databaseFileExists()) {
-                    await fs.unlink(this.dbPath); // Delete the database file if it was created
-                }
+                await fs.unlink(this.dbPath); // Delete the partially created database file
             } catch (deleteErr) {
                 // Throw error during cleanup
                 throw new Error(`Error during database file cleanup: ${deleteErr.message}`);
@@ -68,21 +65,9 @@ class EntitiesDb {
     async initializeDatabase() {
         try {
             const schema = await fs.readFile(this.schemaPath, "utf8");
-            await this.queryHelper.execSQL(schema);
+            await this.orm.execute(schema);
             await this.migrator.setCurrentVersion('0', "init_schema");
         } catch (err) {
-            // If there's an error, delete the partially created DB file
-            try {
-                if (await this.databaseFileExists()) {
-                    // await fs.unlink(this.dbPath);
-                }
-            } catch (unlinkErr) {
-                // If the file exists couldn't be deleted, throw an error
-                if (unlinkErr.code !== "ENOENT") {
-                    throw new Error(`Error deleting database file during initialization: ${unlinkErr.message}`);
-                }
-            }
-
             throw new Error(`Error initializing database schema: ${err.message}`);
         }
     }
@@ -120,4 +105,4 @@ class EntitiesDb {
     }
 }
 
-module.exports = new EntitiesDb("entities");
+module.exports = new BalancedeskDb("balancedesk");

@@ -3,7 +3,7 @@ const { app, BrowserWindow, Menu, dialog } = require("electron");
 const path = require("path");
 const { MAIN_PROCESS_PATH, RENDERER_PROCESS_PATH } = require(path.join(__dirname, "constants"));
 const { registerIpcHandlers } = require(path.join(MAIN_PROCESS_PATH, "ipc")); // Centralized import
-const entitiesDb = require(path.join(MAIN_PROCESS_PATH, "database/EntitiesDb"));
+const balancedeskDb = require(path.join(MAIN_PROCESS_PATH, "database/balancedeskDb"));
 
 // Prevent the app from loading a default menu as it is not needed.
 Menu.setApplicationMenu(null);
@@ -54,7 +54,7 @@ app.whenReady().then(async () => {
     // Initialize core database
     // =============================
     try {
-        await entitiesDb.init();
+        await balancedeskDb.init();
     } catch (err) {
         console.error(err.message);
 

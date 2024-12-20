@@ -2,11 +2,10 @@ const fs = require("fs/promises");
 const path = require("path");
 
 class Migrator {
-    constructor(db) {
-        this.db = db.db;
-        this.queryHelper = db.queryHelper;
-        this.migrationsPath = db.migrationsPath;
-        this.rollbacksPath = db.rollbacksPath;
+    constructor(db, migrationsPath, rollbacksPath) {
+        this.db = db;
+        this.migrationsPath = migrationsPath;
+        this.rollbacksPath = rollbacksPath;
     }
 
     /**
@@ -28,7 +27,7 @@ class Migrator {
                 // Extract the description by removing version numbers and extension
                 const description = file.replace(/^\d+_/, '').replace(".sql", '');
 
-                await this.queryHelper.execSQL(migrationSQL);
+                await this.db.exec(migrationSQL);
                 await this.setCurrentVersion(version, description);
             }
         }
@@ -46,7 +45,7 @@ class Migrator {
             path.join(this.rollbacksPath, rollbackFile),
             "utf8"
         );
-        await this.queryHelper.execSQL(rollbackSQL);
+        await this.db.exec(rollbackSQL);
         await this.setCurrentVersion(currentVersion - 1);
     }
 
@@ -68,7 +67,7 @@ class Migrator {
      */
     async setCurrentVersion(version, description) {
         const query = `INSERT INTO db_version (version, description) VALUES (${version}, '${description}');`;
-        await this.queryHelper.execSQL(query);
+        await this.db.exec(query);
     }
 
     /**
