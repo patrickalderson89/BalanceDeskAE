@@ -1,0 +1,73 @@
+#feedback-page {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+
+    /* Form Styles */
+    #feedback-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* Form Group */
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-label {
+        margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+    }
+
+    .form-textarea {
+        height: 100px;
+        resize: vertical;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+        outline: none;
+        border-color: var(--color-secondary);
+        box-shadow: 0 0 4px var(--color-secondary);
+    }
+
+    /* Checkbox Group */
+    .form-checkbox {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .form-checkbox label {
+        color: var(--color-text-muted);
+        line-height: 1.5;
+    }
+
+    .form-checkbox label a {
+        text-decoration: none;
+    }
+
+    .form-checkbox label a:hover {
+        text-decoration: underline;
+    }
+
+    /* Submit Button */
+    #submit-btn {
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-align: center;
+        transition: background-color 0.3s;
+    }
+}

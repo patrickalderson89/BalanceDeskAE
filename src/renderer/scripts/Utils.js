@@ -20,6 +20,8 @@ class Utils {
         try {
             if (type === "name") {
                 return await appinfo?.name() || "";
+            } else if (type === "nicename") {
+                return await appinfo?.nicename() || "";
             } else if (type === "version") {
                 return await appinfo?.version() || "";
             } else {

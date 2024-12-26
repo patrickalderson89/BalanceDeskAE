@@ -1,9 +1,10 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, dialog } = require("electron");
+const { app, BrowserWindow, Menu, dialog, globalShortcut } = require("electron");
 const path = require("path");
 const { MAIN_PROCESS_PATH, RENDERER_PROCESS_PATH } = require(path.join(__dirname, "constants"));
 const { registerIpcHandlers } = require(path.join(MAIN_PROCESS_PATH, "ipc")); // Centralized import
-const balancedeskDb = require(path.join(MAIN_PROCESS_PATH, "database/balancedeskDb"));
+const balancedeskDb = require(path.join(MAIN_PROCESS_PATH, "database/BalancedeskDb"));
+const { registerShortcuts, unregisterShortcuts } = require('./shortcuts');
 
 // Prevent the app from loading a default menu as it is not needed.
 Menu.setApplicationMenu(null);
@@ -30,9 +31,6 @@ const createWindow = () => {
     mainWindow.on("closed", () => {
         mainWindow = null;
     });
-
-    // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -49,6 +47,7 @@ app.whenReady().then(async () => {
 
     createWindow();
     registerIpcHandlers(); // Register all IPC handlers
+    registerShortcuts(mainWindow); // Register shortcuts
 
     // =============================
     // Initialize core database
@@ -70,6 +69,12 @@ app.whenReady().then(async () => {
     }
 
     mainWindow.show();
+});
+
+// Clean up when the app is quitting
+app.on("will-quit", () => {
+    // Unregister all shortcuts
+    unregisterShortcuts();
 });
 
 // Quit when all windows are closed, except on macOS. There, it"s common

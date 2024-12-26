@@ -1,0 +1,37 @@
+<div id="feedback-page">
+    <base href="feedback/">
+    <link rel="stylesheet" href="feedback.css">
+
+    <h1>Lascia il tuo Feedback</h1>
+    <form id="feedback-form">
+        <div class="form-group">
+            <label for="email" class="form-label">La tua Email</label>
+            <input type="email" id="email" class="form-input" name="email" placeholder="Inserisci la tua email"
+                required>
+        </div>
+
+        <div class="form-group">
+            <label for="subject" class="form-label">Oggetto</label>
+            <input type="text" id="subject" class="form-input" name="subject" placeholder="Inserisci l'oggetto"
+                required>
+        </div>
+
+        <div class="form-group">
+            <label for="body" class="form-label">Il tuo Feedback</label>
+            <textarea id="body" class="form-textarea" name="body" placeholder="Scrivi qui il tuo feedback"
+                required></textarea>
+        </div>
+
+        <div class="form-group form-checkbox">
+            <label for="terms">
+                Dichiaro di autorizzare il destinatario a ricontattarmi e acconsento all'utilizzo delle informazioni
+                fornite
+                nel feedback per migliorare i servizi e le funzionalità dell'app.
+            </label>
+        </div>
+
+        <button type="submit" id="submit-btn">Invia</button>
+    </form>
+
+    <script src="feedback.js" async></script>
+</div>

@@ -1,0 +1,83 @@
+/* Default (Light Theme) Variables */
+:root {
+    /* Primary Colors */
+    --color-primary: #1A2D57;
+    /* Dark blue for the primary color */
+    --color-secondary: #00A7E1;
+    /* Vibrant light blue for accents */
+    --color-accent: #D99F0D;
+    /* Gold for accent elements */
+
+    /* Background Colors */
+    --color-background: #ffffff;
+    /* Light background for the body */
+    --color-background-alt: #f4f4f4;
+    /* Light gray for secondary elements */
+
+    /* Text Colors */
+    --color-text-primary: #212529;
+    /* Dark text for primary content */
+    --color-text-secondary: #495057;
+    /* Muted dark text for secondary content */
+    --color-text-muted: #6c757d;
+    /* Muted text for less important content */
+
+    /* Feedback Colors */
+    --color-success: #4CAF50;
+    /* Green for success messages */
+    --color-error: #E53946;
+    /* Red for error messages */
+    --color-info: #2196F3;
+    /* Blue for informational messages */
+
+    /* State Colors */
+    --color-hover: #3B8EB3;
+    /* Lighter blue for hover states */
+    --color-border: #e0e0e0;
+    /* Lighter borders for better contrast */
+    --color-shadow: rgba(0, 0, 0, 0.1);
+    /* Subtle shadow color */
+}
+
+/* Dark Theme Variables */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Primary Colors */
+        --color-primary: #1A2D57;
+        /* Dark blue for the primary color */
+        --color-secondary: #00A7E1;
+        /* Vibrant light blue for accents */
+        --color-accent: #D99F0D;
+        /* Gold for accent elements */
+
+        /* Background Colors */
+        --color-background: #121212;
+        /* Dark background for the body */
+        --color-background-alt: #1C1C1C;
+        /* Slightly darker for secondary elements */
+
+        /* Text Colors */
+        --color-text-primary: #E9ECEF;
+        /* Light text for primary content */
+        --color-text-secondary: #F1F1F1;
+        /* Very light text for secondary content */
+        --color-text-muted: #B0B0B0;
+        /* Muted text for less important content */
+
+        /* Feedback Colors */
+        --color-success: #4CAF50;
+        /* Green for success messages */
+        --color-error: #E53946;
+        /* Red for error messages */
+        --color-info: #2196F3;
+        /* Blue for informational messages */
+
+        /* State Colors */
+        --color-hover: #3B8EB3;
+        /* Lighter blue for hover states */
+        --color-border: #333333;
+        /* Darker borders for better contrast */
+        --color-shadow: rgba(255, 255, 255, 0.1);
+        /* Light shadow color */
+    }
+}

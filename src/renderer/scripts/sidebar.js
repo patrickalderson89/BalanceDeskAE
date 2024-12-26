@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.error("Utils class is not defined.");
         return;
     }
-    Utils.setElementText("sidebar-app-name", await Utils.getAppInfo("name"));
+    Utils.setElementText("sidebar-app-name", await Utils.getAppInfo("nicename"));
 
     // Check if a default page has been set and load it
     if (currentPageInput.value) {
@@ -44,9 +44,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     sidebarLinks.forEach((link) => {
         link.addEventListener("click", (event) => {
-            if (link.classList.contains("outlink")) {
-                return; // Skip if the link is an external link
-            }
             event.preventDefault();
             const href = link.getAttribute("href");
             if (href && href !== '#') {
