@@ -13,7 +13,7 @@ class BalancedeskDb {
         this.rollbacksPath = path.join(__dirname, "sql", "rollbacks");
         this.db = null; // Holds the database instance
         this.migrator = null; // Holds the Migrator instance
-        this.orm = null; // Holds the SimpleORM instance
+        this.orm = null // Holds the SimpleORM instance
     }
 
     /**
@@ -65,11 +65,26 @@ class BalancedeskDb {
     async initializeDatabase() {
         try {
             const schema = await fs.readFile(this.schemaPath, "utf8");
-            await this.orm.execute(schema);
+            await this.execSQL(schema);
             await this.migrator.setCurrentVersion('0', "init_schema");
         } catch (err) {
             throw new Error(`Error initializing database schema: ${err.message}`);
         }
+    }
+
+    /**
+     * Execute an SQL query (e.g., for schema or migrations).
+     */
+    async execSQL(sql) {
+        return new Promise((resolve, reject) => {
+            this.db.exec(sql, (err) => {
+                if (err) {
+                    reject(new Error(`Error executing SQL: ${err.message}`));
+                } else {
+                    resolve();
+                }
+            });
+        });
     }
 
     /**
@@ -102,6 +117,51 @@ class BalancedeskDb {
         } else {
             throw new Error("Migrator not initialized.");
         }
+    }
+
+    /**
+     * Execute a query that expects a single result (e.g., SELECT).
+     */
+    async getQuery(query, params = []) {
+        return new Promise((resolve, reject) => {
+            this.db.get(query, params, (err, row) => {
+                if (err) {
+                    reject(new Error(`Error executing query: ${err.message}`));
+                } else {
+                    resolve(row);
+                }
+            });
+        });
+    }
+
+    /**
+     * Execute a query that expects multiple results (e.g., SELECT).
+     */
+    async allQuery(query, params = []) {
+        return new Promise((resolve, reject) => {
+            this.db.all(query, params, (err, rows) => {
+                if (err) {
+                    reject(new Error(`Error executing query: ${err.message}`));
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+    }
+
+    /**
+     * Execute a query that modifies data (e.g., INSERT, UPDATE, DELETE).
+     */
+    async runQuery(query, params = []) {
+        return new Promise((resolve, reject) => {
+            this.db.run(query, params, function (err) {
+                if (err) {
+                    reject(new Error(`Error executing query: ${err.message}`));
+                } else {
+                    resolve(this.lastID); // Return last inserted ID for inserts
+                }
+            });
+        });
     }
 }
 

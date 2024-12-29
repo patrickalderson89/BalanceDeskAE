@@ -18,60 +18,63 @@
             <input type="text" id="previous-page" name="previous_page" value="">
             <input type="text" id="current-page" name="current_page" value="">
         </div>
-        <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <!-- Top Section -->
-            <div class="sidebar-top">
-                <!-- Button to toggle sidebar visibility -->
-                <button class="sidebar-toggle-btn" id="sidebar-toggle" title="Riduci">
-                    <img src="../assets/icons/sidebar/toggle-icon.svg" alt="Riduci/espandi barra laterale">
-                </button>
-                <a href="#" class="top-item" title="BalanceDesk">
-                    <img src="../assets/icons/logo.svg" alt="Logo BalanceDesk" class="top-icon">
-                    <span class="top-text" id="sidebar-app-name"></span>
-                </a>
-            </div>
 
-            <!-- Middle Section -->
-            <div class="sidebar-middle">
-                <div class="sidebar-nav">
-                    <a href="dashboard/dashboard.html" class="nav-item" title="Dashboard">
-                        <img src="../assets/icons/sidebar/dashboard-icon.svg" alt="Dashboard" class="nav-icon">
-                        <span class="nav-text">Dashboard</span>
+        <!-- Sidebar and main content wrapper -->
+        <div id="content-wrapper">
+            <!-- Sidebar -->
+            <div class="sidebar" id="sidebar">
+                <!-- Top Section -->
+                <div class="sidebar-top">
+                    <!-- Button to toggle sidebar visibility -->
+                    <button class="sidebar-toggle-btn" id="sidebar-toggle" title="Riduci">
+                        <img src="../assets/icons/sidebar/toggle-icon.svg" alt="Riduci/espandi barra laterale">
+                    </button>
+                    <a href="#" class="top-item" title="BalanceDesk">
+                        <img src="../assets/icons/logo.svg" alt="Logo BalanceDesk" class="top-icon">
+                        <span class="top-text" id="sidebar-app-name"></span>
                     </a>
-                    <a href="categories/categories.html" class="nav-item" title="Categorie">
-                        <img src="../assets/icons/sidebar/categories-icon.svg" alt="Categorie" class="nav-icon">
-                        <span class="nav-text">Categorie</span>
+                </div>
+
+                <!-- Middle Section -->
+                <div class="sidebar-middle">
+                    <div class="sidebar-nav">
+                        <a href="dashboard/dashboard.html" class="nav-item" title="Dashboard">
+                            <img src="../assets/icons/sidebar/dashboard-icon.svg" alt="Dashboard" class="nav-icon">
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                        <a href="categories/categories.html" class="nav-item" title="Categorie">
+                            <img src="../assets/icons/sidebar/categories-icon.svg" alt="Categorie" class="nav-icon">
+                            <span class="nav-text">Categorie</span>
+                        </a>
+                        <a href="add-new/add-new.html" class="nav-item" title="Aggiungi Nuovo">
+                            <img src="../assets/icons/sidebar/add-new-icon.svg" alt="Aggiungi Nuovo" class="nav-icon">
+                            <span class="nav-text">Aggiungi nuovo</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Bottom Section -->
+                <div class="sidebar-bottom">
+                    <a href="trash/trash.html" class="bottom-item" title="Cestino">
+                        <img src="../assets/icons/sidebar/trash-icon.svg" alt="Cestino" class="bottom-icon">
+                        <span class="bottom-text">Cestino</span>
                     </a>
-                    <a href="add-new/add-new.html" class="nav-item" title="Aggiungi Nuovo">
-                        <img src="../assets/icons/sidebar/add-new-icon.svg" alt="Aggiungi Nuovo" class="nav-icon">
-                        <span class="nav-text">Aggiungi nuovo</span>
+                    <a href="settings/settings.html" class="bottom-item" title="Impostazioni">
+                        <img src="../assets/icons/sidebar/settings-icon.svg" alt="Impostazioni" class="bottom-icon">
+                        <span class="bottom-text">Impostazioni</span>
+                    </a>
+                    <a href="feedback/feedback.html" class="bottom-item" title="Feedback">
+                        <img src="../assets/icons/sidebar/feedback-icon.svg" alt="Feedback" class="bottom-icon">
+                        <span class="bottom-text">Feedback</span>
                     </a>
                 </div>
             </div>
 
-            <!-- Bottom Section -->
-            <div class="sidebar-bottom">
-                <a href="trash/trash.html" class="bottom-item" title="Cestino">
-                    <img src="../assets/icons/sidebar/trash-icon.svg" alt="Cestino" class="bottom-icon">
-                    <span class="bottom-text">Cestino</span>
-                </a>
-                <a href="settings/settings.html" class="bottom-item" title="Impostazioni">
-                    <img src="../assets/icons/sidebar/settings-icon.svg" alt="Impostazioni" class="bottom-icon">
-                    <span class="bottom-text">Impostazioni</span>
-                </a>
-                <a href="feedback/feedback.html" class="bottom-item" title="Feedback">
-                    <img src="../assets/icons/sidebar/feedback-icon.svg" alt="Feedback" class="bottom-icon">
-                    <span class="bottom-text">Feedback</span>
-                </a>
-            </div>
+            <!-- Main Content -->
+            <main id="main-content">
+                <!-- Main Content Here -->
+            </main>
         </div>
-
-        <!-- Main Content -->
-        <main id="main-content">
-            <!-- Main Content Here -->
-        </main>
-
         <!-- Footer -->
         <footer class="footer">
             <p>© <span id="footer-cp-year"></span> Patrick Alderson | <span id="footer-app-name"></span> v<span

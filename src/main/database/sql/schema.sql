@@ -108,26 +108,6 @@ CREATE INDEX IF NOT EXISTS idx_sub_budgets_category_id ON sub_budgets (category_
 -- ========================================================
 -- Views for Frequent Queries
 -- ========================================================
--- View: Total Income and Expenses for Each Sub-Budget (Excludes Deleted Items)
-CREATE VIEW
-    IF NOT EXISTS sub_budget_totals AS
-SELECT
-    sb.id AS sub_budget_id,
-    sb.name AS sub_budget_name,
-    sb.category_id,
-    COALESCE(SUM(i.amount), 0) AS total_incomes,
-    COALESCE(SUM(e.amount), 0) AS total_expenses
-FROM
-    sub_budgets sb
-    LEFT JOIN incomes i ON sb.id = i.sub_budget_id
-    AND i.is_deleted = 0
-    LEFT JOIN expenses e ON sb.id = e.sub_budget_id
-    AND e.is_deleted = 0
-WHERE
-    sb.is_deleted = 0
-GROUP BY
-    sb.id;
-
 -- View: Total Income and Expenses for Each Category (Excludes Deleted Items)
 CREATE VIEW
     IF NOT EXISTS category_totals AS
@@ -148,3 +128,23 @@ WHERE
     c.is_deleted = 0
 GROUP BY
     c.id;
+
+-- View: Total Income and Expenses for Each Sub-Budget (Excludes Deleted Items)
+CREATE VIEW
+    IF NOT EXISTS sub_budget_totals AS
+SELECT
+    sb.id AS sub_budget_id,
+    sb.name AS sub_budget_name,
+    sb.category_id,
+    COALESCE(SUM(i.amount), 0) AS total_incomes,
+    COALESCE(SUM(e.amount), 0) AS total_expenses
+FROM
+    sub_budgets sb
+    LEFT JOIN incomes i ON sb.id = i.sub_budget_id
+    AND i.is_deleted = 0
+    LEFT JOIN expenses e ON sb.id = e.sub_budget_id
+    AND e.is_deleted = 0
+WHERE
+    sb.is_deleted = 0
+GROUP BY
+    sb.id;

@@ -2,7 +2,91 @@
     <base href="dashboard/">
     <link rel="stylesheet" href="dashboard.css">
 
-    <h1>Silence is golden</h1>
+    <h1>CRUD Operations Test</h1>
+
+    <!-- Create Operation -->
+    <form id="create-container">
+        <h2>Create</h2>
+        <select id="entityTypeCreate" required>
+            <option value="category">Category</option>
+        </select>
+        <input type="text" id="nameCreate" placeholder="Name" required>
+        <textarea id="descriptionCreate" placeholder="Description" required></textarea>
+        <button type="button" id="test-create-btn">Create</button>
+    </form>
+    <br>
+
+    <!-- Read Operation -->
+    <form id="read-container">
+        <h2>Read</h2>
+        <select id="entityTypeRead" required>
+            <option value="category">Category</option>
+        </select>
+        <input type="number" id="idRead" placeholder="ID (optional)">
+        <button type="button" id="test-read-btn">Read</button>
+    </form>
+    <br>
+
+    <!-- Update Operation -->
+    <form id="update-container">
+        <h2>Update</h2>
+        <select id="entityTypeUpdate" required>
+            <option value="category">Category</option>
+        </select>
+        <input type="number" id="idUpdate" placeholder="ID" required>
+        <input type="text" id="nameUpdate" placeholder="New Name">
+        <textarea id="descriptionUpdate" placeholder="New Description"></textarea>
+        <button type="button" id="test-update-btn">Update</button>
+    </form>
+    <br>
+
+    <!-- Delete Operation -->
+    <form id="delete-container">
+        <h2>Delete</h2>
+        <select id="entityTypeDelete" required>
+            <option value="category">Category</option>
+        </select>
+        <input type="number" id="idDelete" placeholder="ID" required>
+        <button type="button" id="test-delete-btn">Delete</button>
+    </form>
+    <br>
+
+    <!-- Soft Delete Operation -->
+    <form id="soft-delete-container">
+        <h2>Soft Delete</h2>
+        <select id="entityTypeSoftDelete" required>
+            <option value="category">Category</option>
+        </select>
+        <input type="number" id="idSoftDelete" placeholder="ID" required>
+        <button type="button" id="test-soft-delete-btn">Soft Delete</button>
+    </form>
+    <br>
+
+    <!-- Restore Operation -->
+    <form id="restore-container">
+        <h2>Restore</h2>
+        <select id="entityTypeRestore" required>
+            <option value="category">Category</option>
+        </select>
+        <input type="number" id="idRestore" placeholder="ID" required>
+        <button type="button" id="test-restore-btn">Restore</button>
+    </form>
+    <br><br>
+
+    <!-- Fetch Category Totals -->
+    <form id="category-totals">
+        <h3>Category Totals</h3>
+        <input type="number" id="categoryIdTotals" placeholder="Category ID (optional)">
+        <button type="button" id="fetch-category-totals-btn">Fetch Category Totals</button>
+    </form>
+    <br><br>
+
+    <!-- Fetch Sub-Budget Totals -->
+    <form id="sub-budget-totals">
+        <h3>Sub-Budget Totals</h3>
+        <input type="number" id="subBudgetIdTotals" placeholder="Sub-Budget ID (optional)">
+        <button type="button" id="fetch-sub-budget-totals-btn">Fetch Sub-Budget Totals</button>
+    </form>
 
     <script src="dashboard.js" async></script>
 </div>

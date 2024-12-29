@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, dialog, globalShortcut } = require("electron");
+const { app, BrowserWindow, Menu, dialog, globalShortcut, ipcMain } = require("electron");
 const path = require("path");
 const { MAIN_PROCESS_PATH, RENDERER_PROCESS_PATH } = require(path.join(__dirname, "constants"));
 const { registerIpcHandlers } = require(path.join(MAIN_PROCESS_PATH, "ipc")); // Centralized import
@@ -46,8 +46,6 @@ app.whenReady().then(async () => {
     });
 
     createWindow();
-    registerIpcHandlers(); // Register all IPC handlers
-    registerShortcuts(mainWindow); // Register shortcuts
 
     // =============================
     // Initialize core database
@@ -67,6 +65,9 @@ app.whenReady().then(async () => {
             app.quit();
         });
     }
+
+    registerIpcHandlers(ipcMain, balancedeskDb); // Register all IPC handlers
+    registerShortcuts(mainWindow); // Register shortcuts
 
     mainWindow.show();
 });

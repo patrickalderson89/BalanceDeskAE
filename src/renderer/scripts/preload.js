@@ -1,5 +1,31 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
+// Define the entities operations to expose
+const entities = [
+    "Category", "SubBudget", "Income", "Expense"
+];
+const createExposeMethods = (entities) => {
+    const exposedMethods = {};
+
+    entities.forEach(operation => {
+        const operationLower = operation.toLowerCase();
+
+        // Create methods for each operation (create, read, update, delete)
+        exposedMethods[`create${operation}`] = async (data) => { return await ipcRenderer.invoke(`create-${operationLower}`, data) };
+        exposedMethods[`read${operation}`] = async (conditions, columns, deleted) => { return await ipcRenderer.invoke(`read-${operationLower}`, conditions, columns, deleted) };
+        exposedMethods[`readAll${operation}`] = async (deleted) => { return await ipcRenderer.invoke(`read-${operationLower}`, {}, ['*'], deleted) };
+        exposedMethods[`update${operation}`] = async (data, conditions) => { return await ipcRenderer.invoke(`update-${operationLower}`, data, conditions) };
+        exposedMethods[`delete${operation}`] = async (conditions) => { return await ipcRenderer.invoke(`delete-${operationLower}`, conditions) };
+        exposedMethods[`softDelete${operation}`] = async (conditions) => { return await ipcRenderer.invoke(`update-${operationLower}`, { is_deleted: 1 }, conditions) };
+        exposedMethods[`restore${operation}`] = async (conditions) => { return await ipcRenderer.invoke(`update-${operationLower}`, { is_deleted: 0 }, conditions) };
+    });
+
+    exposedMethods["getCategoryTotals"] = async (ID) => { return await ipcRenderer.invoke("getCategoryTotals"), ID };
+    exposedMethods["getSubBudgetTotals"] = async (ID) => { return await ipcRenderer.invoke("getSubBudgetTotals"), ID };
+
+    return exposedMethods;
+};
+
 // Expose app info methods to the renderer process
 contextBridge.exposeInMainWorld("appinfo", {
     name: async () => {
@@ -13,7 +39,5 @@ contextBridge.exposeInMainWorld("appinfo", {
     },
 });
 
-// Expose app urls
-contextBridge.exposeInMainWorld("urls", {
-    defaultPage: "dashboard/dashboard.html",
-});
+// Dynamically expose the CRUD methods
+contextBridge.exposeInMainWorld("database", createExposeMethods(entities));
