@@ -17,7 +17,7 @@ document.getElementById("feedback-form").addEventListener("submit", function (ev
 
     // Simulate a short delay
     setTimeout(() => {
-        const mailtoLink = `mailto:feedback@app.com?subject=${subject}&body=${body}`;
+        const mailtoLink = `mailto:feedback.balancedesk.ae@gmail.com?subject=${subject}&body=${body}`;
         window.location.href = mailtoLink;
 
         if (typeof Utils === "function") {
