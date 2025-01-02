@@ -12,8 +12,7 @@ module.exports = {
         const operations = {
             create: async (tableName, data) => { return await orm.insert(tableName, data) },
             read: async (tableName, conditions, columns, deleted) => {
-                const result = await orm.select(tableName, conditions, columns, deleted);
-                return result.length > 0 ? result[0] : null;
+                return await orm.select(tableName, conditions, columns, deleted)
             },
             update: async (tableName, data, conditions) => { return await orm.update(tableName, data, conditions) },
             delete: async (tableName, conditions) => { return await orm.delete(tableName, conditions) },
@@ -37,7 +36,7 @@ module.exports = {
 
         ipcMain.handle("getCategoryTotals", async (event, ID) => {
             try {
-                return await orm.getCategoryTotals(ID)
+                return await orm.getCategoryTotals(ID);
             } catch {
                 console.error(`Error handling ${channel}:`, error);
                 return false;
@@ -45,7 +44,7 @@ module.exports = {
         });
         ipcMain.handle("getSubBudgetTotals", async (event, ID) => {
             try {
-                return await orm.getSubBudgetTotals(ID)
+                return await orm.getSubBudgetTotals(ID);
             } catch {
                 console.error(`Error handling ${channel}:`, error);
                 return false;

@@ -296,7 +296,7 @@ class Utils {
 
         try {
             const totals = await database.getCategoryTotals(categoryId);
-            return totals;
+            return categoryId ? totals[0] : totals;
         } catch (error) {
             console.error(`Error fetching category totals for ID "${categoryId}":`, error);
             return null;
@@ -323,7 +323,7 @@ class Utils {
 
         try {
             const totals = await database.getSubBudgetTotals(subBudgetId);
-            return totals;
+            return subBudgetId ? totals[0] : totals;
         } catch (error) {
             console.error(`Error fetching sub-budget totals for ID "${subBudgetId}":`, error);
             return null;

@@ -16,12 +16,12 @@ const createExposeMethods = (entities) => {
         exposedMethods[`readAll${operation}`] = async (deleted) => { return await ipcRenderer.invoke(`read-${operationLower}`, {}, ['*'], deleted) };
         exposedMethods[`update${operation}`] = async (data, conditions) => { return await ipcRenderer.invoke(`update-${operationLower}`, data, conditions) };
         exposedMethods[`delete${operation}`] = async (conditions) => { return await ipcRenderer.invoke(`delete-${operationLower}`, conditions) };
-        exposedMethods[`softDelete${operation}`] = async (conditions) => { return await ipcRenderer.invoke(`update-${operationLower}`, { is_deleted: 1 }, conditions) };
-        exposedMethods[`restore${operation}`] = async (conditions) => { return await ipcRenderer.invoke(`update-${operationLower}`, { is_deleted: 0 }, conditions) };
+        exposedMethods[`softDelete${operation}`] = async (conditions) => { return await ipcRenderer.invoke(`update-${operationLower}`, { is_deleted: 1, deleted_at: new Date() }, conditions) };
+        exposedMethods[`restore${operation}`] = async (conditions) => { return await ipcRenderer.invoke(`update-${operationLower}`, { is_deleted: 0, deleted_at: new Date() }, conditions) };
     });
 
-    exposedMethods["getCategoryTotals"] = async (ID) => { return await ipcRenderer.invoke("getCategoryTotals"), ID };
-    exposedMethods["getSubBudgetTotals"] = async (ID) => { return await ipcRenderer.invoke("getSubBudgetTotals"), ID };
+    exposedMethods["getCategoryTotals"] = async (ID) => { return await ipcRenderer.invoke("getCategoryTotals", ID) };
+    exposedMethods["getSubBudgetTotals"] = async (ID) => { return await ipcRenderer.invoke("getSubBudgetTotals", ID) };
 
     return exposedMethods;
 };
