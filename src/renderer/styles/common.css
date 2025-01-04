@@ -2,6 +2,10 @@
     display: none;
 }
 
+label.required::after{
+    content: " *";
+}
+
 .btn-loading-spinner {
     display: inline-block;
     width: 20px;

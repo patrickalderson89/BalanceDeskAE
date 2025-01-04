@@ -8,6 +8,27 @@ function handleError(operation, entityType, error) {
   console.error(`Operation: ${operation} | Entity: ${entityType} | Error:`, error);
 }
 
+// Validation of each input field
+function updateCreateButtonState() {
+  const selectedType = document.getElementById("entityType").value;
+  const fields = document.querySelectorAll(`#${selectedType}-fields input[required], #${selectedType}-fields select[required]`);
+  const createButton = document.getElementById("create-btn");
+
+  // Verifica se tutti i campi obbligatori sono validi
+  const allValid = Array.from(fields).every((field) => field.checkValidity());
+
+  // Abilita o disabilita il pulsante
+  createButton.disabled = !allValid;
+  allValid ? createButton.classList.remove("disabled") : createButton.className = "disabled"
+}
+
+
+
+// Aggiungi un evento 'input' su tutti i campi di input e select
+document.getElementById("fields-container").addEventListener("input", async () => {
+  updateCreateButtonState();
+});
+
 
 
 document.getElementById("entityType").addEventListener("change", async () => {
@@ -25,14 +46,18 @@ document.getElementById("entityType").addEventListener("change", async () => {
 });
 
 
-// Validation of each input field
-document.getElementById("fields-container").addEventListener("input", async () => {
-  const selectedType = document.getElementById("entityType").value;
-  const createButton = document.getElementById("create-btn");
+document.getElementById("fields-container").addEventListener("input", async (event) => {
+  const inputField = event.target;
 
-  const fields = document.querySelectorAll(`#${selectedType}-fields input, #${selectedType}-fields select`);
-  const allValid = Array.from(fields).every((field) => field.checkValidity());
-  createButton.disabled = !allValid;
+  // Validazione personalizzata (se necessaria)
+  if (inputField.id === "category-name" && inputField.value.trim() === "") {
+    inputField.setCustomValidity("Name is required and must be unique.");
+  } else {
+    inputField.setCustomValidity(""); // Resetta il messaggio di errore
+  }
+
+  // Aggiorna il pulsante di submit
+  updateCreateButtonState();
 });
 
 
