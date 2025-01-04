@@ -4,7 +4,7 @@
 
     <h1>Silence is golden</h1>
     
-    <!-- test form to create new categories -->
+    <!-- test form to create new categories 
     <form id="create-container">
         <h2>Create</h2>
         <select id="entityTypeCreate" required>
@@ -14,6 +14,105 @@
         <textarea id="descriptionCreate" placeholder="Description" required></textarea>
         <button type="button" id="test-create-btn">Create</button>
     </form>
+-->
+
+
+    
+    <form id="dynamic-form">
+        <!-- Select for entity type -->
+        <label for="entityType">Select Entity Type :</label>
+        <select id="entityType" required>
+          <option value="" disabled selected>Select an entity...</option>
+          <option value="category">Category</option>
+          <option value="sub-Budget">Sub-Budget</option>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+        
+        <!-- Form fields for different entities -->
+
+        <div id="fields-container" class="form-container">
+          <!-- Category fields -->
+          <div id="category-fields" class="hidden">
+            <label for="category-name">Name :</label>
+            <input type="text" id="category-name" required>
+            <span class="error hidden" id="category-name-error">Name is required and must be unique.</span>
+            
+            <label for="category-description">Description:</label>
+            <input type="text" id="category-description">
+          </div>
+    
+          <!-- Sub-Budget fields -->
+          <div id="sub-Budget-fields" class="hidden">
+            <label for="subbudget-name">Name :</label>
+            <input type="text" id="subbudget-name" required>
+            <span class="error hidden" id="subbudget-name-error">Name is required.</span>
+            
+            <label for="subbudget-description">Description:</label>
+            <input type="text" id="subbudget-description">
+    
+            <label for="subbudget-category-id">Category ID :</label>
+            <input type="number" id="subbudget-category-id" required>
+          </div>
+    
+          <!-- Income fields -->
+          <div id="income-fields" class="hidden">
+            <label for="income-subbudget-id">Sub-Budget ID :</label>
+            <input type="number" id="income-subbudget-id" required>
+    
+            <label for="income-title">Title :</label>
+            <input type="text" id="income-title" required>
+            
+            <label for="income-description">Description :</label>
+            <input type="text" id="income-description">
+            
+            <label for="income-source">Source :</label>
+            <input type="text" id="income-source">
+            
+            <label for="income-amount">Amount :</label>
+            <input type="number" id="income-amount" required step="0.01">
+            
+            <label for="income-payment-type">Payment Type :</label>
+            <select id="income-payment-type" required>
+              <option value="cash">Cash</option>
+              <option value="bank">Bank</option>
+            </select>
+            
+            <label for="income-transaction-date">Transaction Date :</label>
+            <input type="date" id="income-transaction-date" required>
+          </div>
+    
+          <!-- Expense fields -->
+          <div id="expense-fields" class="hidden">
+            <label for="expense-subbudget-id">Sub-Budget ID:</label>
+            <input type="number" id="expense-subbudget-id" required>
+            
+            <label for="expense-title">Title :</label>
+            <input type="text" id="expense-title" required>
+            
+            <label for="expense-description">Description :</label>
+            <input type="text" id="expense-description">
+            
+            <label for="expense-recipient">Recipient :</label>
+            <input type="text" id="expense-recipient">
+            
+            <label for="expense-amount">Amount :</label>
+            <input type="number" id="expense-amount" required step="0.01">
+            
+            <label for="expense-payment-type">Payment Type :</label>
+            <select id="expense-payment-type" required>
+              <option value="cash">Cash</option>
+              <option value="bank">Bank</option>
+            </select>
+            
+            <label for="expense-transaction-date">Transaction Date :</label>
+            <input type="date" id="expense-transaction-date" required>
+          </div>
+        </div>
+    
+        <!-- Submit button -->
+        <button type="button" id="create-btn">Create</button>
+      </form>
 
     <script src="add-new.js" async></script>
 </div>
