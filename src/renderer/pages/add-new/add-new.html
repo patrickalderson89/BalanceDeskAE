@@ -3,6 +3,17 @@
     <link rel="stylesheet" href="add-new.css">
 
     <h1>Silence is golden</h1>
+    
+    <!-- test form to create new categories -->
+    <form id="create-container">
+        <h2>Create</h2>
+        <select id="entityTypeCreate" required>
+            <option value="category">Category</option>
+        </select>
+        <input type="text" id="nameCreate" placeholder="Name" required>
+        <textarea id="descriptionCreate" placeholder="Description" required></textarea>
+        <button type="button" id="test-create-btn">Create</button>
+    </form>
 
     <script src="add-new.js" async></script>
 </div>
