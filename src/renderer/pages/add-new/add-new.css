@@ -3,3 +3,70 @@
         text-align: center;
     }
 }
+
+/* Nascondi elementi con la classe "hidden" */
+.hidden {
+    display: none;
+  }
+  
+  /* Stile per il contenitore del form */
+  .form-container {
+    margin-top: 20px;
+  }
+  
+  /* Stile per gli errori di validazione */
+  .error {
+    color: red;
+    font-size: 0.8em;
+  }
+  
+  /* Stile generale del pulsante di submit */
+  button#submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  button#submit-btn {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+  }
+  
+  button#submit-btn:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  
+  /* Stile generale del form */
+  form {
+    max-width: 500px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  
+  input, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+  }
+  
+  input:focus, select:focus {
+    outline: none;
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
