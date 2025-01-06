@@ -10,7 +10,7 @@
         <select id="entityType" required>
           <option value="" disabled selected>Select an entity...</option>
           <option value="category">Category</option>
-          <option value="sub-Budget">Sub-Budget</option>
+          <option value="subBudget">Sub-Budget</option>
           <option value="income">Income</option>
           <option value="expense">Expense</option>
         </select>
@@ -28,21 +28,21 @@
           </div>
     
           <!-- Sub-Budget fields -->
-          <div id="sub-Budget-fields" class="hidden">
-            <label for="subbudget-name" class="required">Name</label>
-            <input type="text" id="subbudget-name" required>
+          <div id="subBudget-fields" class="hidden">
+            <label for="subBudget-category-id" class="required">Category ID</label>
+            <input type="number" id="subBudget-category-id" required min="0" step="1" required>
+
+            <label for="subBudget-name" class="required">Name</label>
+            <input type="text" id="subBudget-name" required>
             
-            <label for="subbudget-description">Description</label>
-            <input type="text" id="subbudget-description">
-    
-            <label for="subbudget-category-id" class="required">Category ID</label>
-            <input type="number" id="subbudget-category-id" required>
+            <label for="subBudget-description">Description</label>
+            <input type="text" id="subBudget-description">
           </div>
     
           <!-- Income fields -->
           <div id="income-fields" class="hidden">
             <label for="income-subbudget-id" class="required">Sub-Budget ID</label>
-            <input type="number" id="income-subbudget-id" required>
+            <input type="number" id="income-subbudget-id" required min="0" step="1" required>
     
             <label for="income-title" class="required">Title</label>
             <input type="text" id="income-title" required>
@@ -58,8 +58,9 @@
             
             <label for="income-payment-type" class="required">Payment Type</label>
             <select id="income-payment-type" required>
-              <option value="cash">Cash</option>
-              <option value="bank">Bank</option>
+              <option value="" disabled selected>Seleziona il metodo di pagamento</option>
+              <option value="cash">Contanti</option>
+              <option value="bank">Banca</option>
             </select>
             
             <label for="income-transaction-date" class="required">Transaction Date</label>
@@ -69,7 +70,7 @@
           <!-- Expense fields -->
           <div id="expense-fields" class="hidden">
             <label for="expense-subbudget-id" class="required">Sub-Budget ID</label>
-            <input type="number" id="expense-subbudget-id" required>
+            <input type="number" id="expense-subbudget-id" required min="0" step="1" required>
             
             <label for="expense-title" class="required">Title</label>
             <input type="text" id="expense-title" required>
