@@ -66,22 +66,34 @@ document.getElementById("fields-container").addEventListener("input", async (eve
 document.getElementById("create-btn").addEventListener("click", async () => {
   const entityType = document.getElementById("entityType").value;
 
+  console.log("entityType changed in : " + entityType)
+
   // Map for entity type
   const entityDataCreators = {
     category: () => ({
       name: document.getElementById("category-name").value,
       description: document.getElementById("category-description").value
     }),
-    Product: () => ({
-      name: document.getElementById("nameCreate").value,
-      description: document.getElementById("descriptionCreate").value,
-      price: parseFloat(document.getElementById("priceCreate").value),
-      stock: parseInt(document.getElementById("stockCreate").value)
+    subBudget: () => ({
+      category_id: document.getElementById("subBudget-category-id").value,
+      name: document.getElementById("subBudget-name").value,
+      description: document.getElementById("subBudget-description").value,
     }),
-    User: () => ({
-      username: document.getElementById("usernameCreate").value,
-      email: document.getElementById("emailCreate").value,
-      role: document.getElementById("roleCreate").value
+    income: () => ({
+      sub_budget_id: document.getElementById("income-subbudget-id").value,
+      title: document.getElementById("income-title").value,
+      description: document.getElementById("income-description").value,
+      source: document.getElementById("income-source").value,
+      amount: document.getElementById("income-amount").value,
+      payment_type: document.getElementById("income-payment-type").value
+    }),
+    expense: () => ({
+      sub_budget_id: document.getElementById("expense-subbudget-id").value,
+      title: document.getElementById("expense-title").value,
+      description: document.getElementById("expense-description").value,
+      recipient: document.getElementById("expense-recipient").value,
+      amount: document.getElementById("expense-amount").value,
+      payment_type: document.getElementById("expense-payment-type").value
     })
   };
 
