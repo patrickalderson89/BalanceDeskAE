@@ -14,23 +14,24 @@ function updateCreateButtonState() {
   const fields = document.querySelectorAll(`#${selectedType}-fields input[required], #${selectedType}-fields select[required]`);
   const createButton = document.getElementById("create-btn");
 
-  // Verifica se tutti i campi obbligatori sono validi
+  // Verify if all the input fields are valid
   const allValid = Array.from(fields).every((field) => field.checkValidity());
 
-  // Abilita o disabilita il pulsante
+  // Lock of unlock the submit button
   createButton.disabled = !allValid;
   allValid ? createButton.classList.remove("disabled") : createButton.className = "disabled"
 }
 
 
 
-// Aggiungi un evento 'input' su tutti i campi di input e select
+// Real time input fields validation
 document.getElementById("fields-container").addEventListener("input", async () => {
   updateCreateButtonState();
 });
 
 
 
+// Hide/Unhide usefull/unusefull forms
 document.getElementById("entityType").addEventListener("change", async () => {
   const entityTypeSelect = document.getElementById("entityType");
   const fieldsContainer = document.getElementById("fields-container");
@@ -43,21 +44,6 @@ document.getElementById("entityType").addEventListener("change", async () => {
   if (selectedType) {
     document.getElementById(`${selectedType}-fields`).classList.remove("hidden");
   }
-});
-
-
-document.getElementById("fields-container").addEventListener("input", async (event) => {
-  const inputField = event.target;
-
-  // Validazione personalizzata (se necessaria)
-  if (inputField.id === "category-name" && inputField.value.trim() === "") {
-    inputField.setCustomValidity("Name is required and must be unique.");
-  } else {
-    inputField.setCustomValidity(""); // Resetta il messaggio di errore
-  }
-
-  // Aggiorna il pulsante di submit
-  updateCreateButtonState();
 });
 
 
