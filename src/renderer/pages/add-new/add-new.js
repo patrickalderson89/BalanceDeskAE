@@ -64,7 +64,8 @@ document.getElementById("fields-container").addEventListener("input", async (eve
 
 // Create Operation
 document.getElementById("create-btn").addEventListener("click", async () => {
-  const entityType = document.getElementById("entityType").value;
+  const entityType = document.getElementById("entityType").value
+  const resultParagraph = document.getElementById("request-result")
 
   console.log("entityType changed in : " + entityType)
 
@@ -110,6 +111,7 @@ document.getElementById("create-btn").addEventListener("click", async () => {
   try {
     const result = await Utils.createEntity(entityType, data);
     handleResult("Create", entityType, result);
+    result ? resultParagraph.innerHTML = "oggetto creato" : resultParagraph.innerHTML = "c'è stato un problema con la creazione dell'oggetto, riprova"
   } catch (error) {
     handleError("Create", entityType, error);
   }

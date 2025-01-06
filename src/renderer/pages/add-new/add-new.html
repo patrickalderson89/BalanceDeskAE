@@ -86,6 +86,7 @@
             
             <label for="expense-payment-type" class="required">Payment Type</label>
             <select id="expense-payment-type" required>
+              <option value="" disabled selected>Seleziona il metodo di pagamento</option>
               <option value="cash">Cash</option>
               <option value="bank">Bank</option>
             </select>
@@ -97,6 +98,7 @@
     
         <!-- Submit button -->
         <button type="button" id="create-btn" class="disabled" disabled>Create</button>
+        <p id="request-result"></p>
       </form>
 
     <script src="add-new.js" async></script>
