@@ -8,7 +8,7 @@ const createExposeMethods = (entities) => {
     const exposedMethods = {};
 
     entities.forEach(operation => {
-        const operationLower = operation.toLowerCase();
+        const operationLower = operation.charAt(0).toLowerCase() + operation.slice(1);
 
         // Create methods for each operation (create, read, update, delete)
         exposedMethods[`create${operation}`] = async (data) => { return await ipcRenderer.invoke(`create-${operationLower}`, data) };
