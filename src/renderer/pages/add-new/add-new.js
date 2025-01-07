@@ -24,6 +24,14 @@ function updateCreateButtonState() {
 
 
 
+document.getElementById("add-new-page").addEventListener("input", async (e)=> {
+
+  e.target.value ? e.target.classList.add("animation-active"): e.target.classList.remove("animation-active");
+
+})
+
+
+
 // Real time input fields validation
 document.getElementById("fields-container").addEventListener("input", async () => {
   updateCreateButtonState();
@@ -97,7 +105,7 @@ document.getElementById("create-btn").addEventListener("click", async () => {
   try {
     const result = await Utils.createEntity(entityType, data);
     handleResult("Create", entityType, result);
-    result ? resultParagraph.innerHTML = "oggetto creato" : resultParagraph.innerHTML = "c'è stato un problema con la creazione dell'oggetto, riprova"
+    result ? resultParagraph.innerHTML = "Oggetto creato." : resultParagraph.innerHTML = "C'è stato un problema con la creazione dell'oggetto, riprova."
   } catch (error) {
     handleError("Create", entityType, error);
   }
