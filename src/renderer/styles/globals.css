@@ -32,7 +32,7 @@ h6 {
     font-weight: bold;
     color: var(--color-text-light);
     /* Light text color for headings */
-    margin-bottom: 15px;
+    margin-bottom: 2rem;
 }
 
 /* h1 */
@@ -106,7 +106,7 @@ button {
     padding: 10px 20px;
     font-size: 1rem;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 1rem;
     transition: background-color 0.3s ease;
 }
 
@@ -120,15 +120,23 @@ select,
 textarea {
     font-size: 1rem;
     padding: 10px;
-    margin-bottom: 20px;
+    margin: 1rem auto;
     border: 1px solid var(--color-border);
     /* Dark border for form elements */
-    border-radius: 5px;
-    width: 100%;
+    border-radius: 1rem;
     background-color: var(--color-background-alt);
     /* Dark background for form inputs */
     color: var(--color-text-primary);
     /* Light text color for inputs */
+}
+
+input,
+textarea{
+    width: 30rem;
+}
+
+select{
+    width: 15rem;
 }
 
 input:focus,
