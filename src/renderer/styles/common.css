@@ -1,9 +1,27 @@
-.hidden {
-    display: none;
+[disabled] {
+    background-color: var(--color-background-alt);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+    opacity: 0.6;
+    pointer-events: none;
 }
 
-label.required::after{
+.page-title {
+    text-align: center;
+}
+
+/* Form Group */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+label:has(+ input[required])::after,
+label:has(+ textarea[required])::after,
+label:has(+ select[required])::after {
     content: " *";
+    color: red;
 }
 
 .btn-loading-spinner {
@@ -15,6 +33,14 @@ label.required::after{
     border-top-color: #007bff;
     /* Adjust color as needed */
     animation: spin 1s linear infinite;
+}
+
+.disclaimer {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-top: 10px;
+    /* Space between anything and disclaimer */
+    text-align: center;
 }
 
 @keyframes spin {

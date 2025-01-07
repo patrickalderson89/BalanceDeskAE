@@ -115,6 +115,23 @@ button:hover {
 }
 
 /* Forms */
+
+/* Form layout */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+label[for] {
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 5px;
+}
+
 input,
 select,
 textarea {
@@ -144,6 +161,33 @@ select:focus,
 textarea:focus {
     border-color: var(--color-secondary);
     /* Focus state with secondary color */
+    outline: none;
+}
+
+
+input:invalid,
+select:invalid,
+textarea:invalid {
+    border-color: var(--color-error);
+    /* Highlight invalid inputs with error color */
+}
+
+input:invalid:focus,
+select:invalid:focus,
+textarea:invalid:focus {
+    outline: none;
+    box-shadow: 0 0 5px var(--color-error);
+}
+
+/* Checkbox styles */
+input[type="checkbox"] {
+    width: auto;
+    height: auto;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:focus {
     outline: none;
 }
 
