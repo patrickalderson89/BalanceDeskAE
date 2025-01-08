@@ -17,9 +17,18 @@
     gap: 0.5rem;
 }
 
+/* When the label comes before the input, textarea, or select */
 label:has(+ input[required])::after,
 label:has(+ textarea[required])::after,
 label:has(+ select[required])::after {
+    content: " *";
+    color: red;
+}
+
+/* When the input, textarea, or select comes before the label */
+input[required]+label::after,
+textarea[required]+label::after,
+select[required]+label::after {
     content: " *";
     color: red;
 }

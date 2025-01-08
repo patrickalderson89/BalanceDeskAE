@@ -67,6 +67,7 @@ async function handleCreateEntity() {
       source: document.getElementById("income-source").value,
       amount: document.getElementById("income-amount").value,
       payment_type: document.getElementById("income-payment-type").value,
+      transaction_date: document.getElementById("income-transaction-date").value,
     }),
     expense: () => ({
       sub_budget_id: document.getElementById("expense-subbudget-id").value,
@@ -75,6 +76,7 @@ async function handleCreateEntity() {
       recipient: document.getElementById("expense-recipient").value,
       amount: document.getElementById("expense-amount").value,
       payment_type: document.getElementById("expense-payment-type").value,
+      transaction_date: document.getElementById("expense-transaction-date").value,
     }),
   };
 
@@ -95,22 +97,12 @@ async function handleCreateEntity() {
   }
 }
 
-async function deleteStuff() {
-  let result = await Utils.softDeleteEntity("category", { 1: 1 })
-    && await Utils.softDeleteEntity("subBudget", { 1: 1 })
-    && await Utils.softDeleteEntity("income", { 1: 1 })
-    && await Utils.softDeleteEntity("expense", { 1: 1 });
-
-  console.log(result);
-}
-
 // Event listeners
 function initializeEventListeners() {
   document.getElementById("add-new-page").addEventListener("input", handleInputAnimation);
   document.getElementById("fields-container").addEventListener("input", updateCreateButtonState);
   document.getElementById("entityType").addEventListener("change", handleEntityTypeChange);
   document.getElementById("create-btn").addEventListener("click", handleCreateEntity);
-  document.getElementById("delete-btn").addEventListener("click", async () => { await deleteStuff() });
 }
 
 // Initialize event listeners
