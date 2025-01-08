@@ -2,7 +2,20 @@
     <base href="trash/">
     <link rel="stylesheet" href="trash.css">
 
-    <h1>Silence is golden</h1>
+    <h1 class="page-title">Cestino</h1>
+    <p class="warning">Attenzione: gli elementi cestinati verranno automaticamente eliminati dopo 30 giorni.
+    </p>
 
-    <script src="trash.js" async></script>
+    <table id="trash-table">
+        <thead>
+            <tr>
+                <th>Titolo</th>
+                <th>Eliminato il</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody id="trash-table-body">
+        </tbody>
+
+        <script src="trash.js" async></script>
 </div>
