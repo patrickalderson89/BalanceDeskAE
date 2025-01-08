@@ -8,66 +8,52 @@ function handleError(operation, entityType, error) {
   console.error(`Operation: ${operation} | Entity: ${entityType} | Error:`, error);
 }
 
-// Validation of each input field
+// Update the state of the create button based on form validation
 function updateCreateButtonState() {
   const selectedType = document.getElementById("entityType").value;
-  const fields = document.querySelectorAll(`#${selectedType}-fields input[required], #${selectedType}-fields select[required]`);
+  const requiredFields = document.querySelectorAll(
+    `#${selectedType}-fields input[required], #${selectedType}-fields select[required]`
+  );
   const createButton = document.getElementById("create-btn");
 
-  // Verify if all the input fields are valid
-  const allValid = Array.from(fields).every((field) => field.checkValidity());
+  const allFieldsValid = Array.from(requiredFields).every((field) => field.checkValidity());
 
-  // Lock of unlock the submit button
-  createButton.disabled = !allValid;
-  allValid ? createButton.classList.remove("disabled") : createButton.className = "disabled"
+  createButton.disabled = !allFieldsValid;
 }
 
+// Add input animation for form fields
+function handleInputAnimation(event) {
+  const target = event.target;
+  if (target.value) {
+    target.classList.add("animation-active");
+  } else {
+    target.classList.remove("animation-active");
+  }
+}
 
-
-document.getElementById("add-new-page").addEventListener("input", async (e)=> {
-
-  e.target.value ? e.target.classList.add("animation-active"): e.target.classList.remove("animation-active");
-
-})
-
-
-
-// Real time input fields validation
-document.getElementById("fields-container").addEventListener("input", async () => {
-  updateCreateButtonState();
-});
-
-
-
-// Hide/Unhide usefull/unusefull forms
-document.getElementById("entityType").addEventListener("change", async () => {
-  const entityTypeSelect = document.getElementById("entityType");
+// Show or hide form fields based on selected entity type
+function handleEntityTypeChange() {
+  const entityType = document.getElementById("entityType").value;
   const fieldsContainer = document.getElementById("fields-container");
 
   Array.from(fieldsContainer.children).forEach((child) => {
-    child.classList.add("hidden");
+    child.hidden = true;
   });
 
-  const selectedType = entityTypeSelect.value;
-  if (selectedType) {
-    document.getElementById(`${selectedType}-fields`).classList.remove("hidden");
+  if (entityType) {
+    document.getElementById(`${entityType}-fields`).hidden = false;
   }
-});
+}
 
+// Create entity operation
+async function handleCreateEntity() {
+  const entityType = document.getElementById("entityType").value;
+  const resultParagraph = document.getElementById("request-result");
 
-
-// Create Operation
-document.getElementById("create-btn").addEventListener("click", async () => {
-  const entityType = document.getElementById("entityType").value
-  const resultParagraph = document.getElementById("request-result")
-
-  console.log("entityType changed in : " + entityType)
-
-  // Map for entity type
   const entityDataCreators = {
     category: () => ({
       name: document.getElementById("category-name").value,
-      description: document.getElementById("category-description").value
+      description: document.getElementById("category-description").value,
     }),
     subBudget: () => ({
       category_id: document.getElementById("subBudget-category-id").value,
@@ -80,7 +66,7 @@ document.getElementById("create-btn").addEventListener("click", async () => {
       description: document.getElementById("income-description").value,
       source: document.getElementById("income-source").value,
       amount: document.getElementById("income-amount").value,
-      payment_type: document.getElementById("income-payment-type").value
+      payment_type: document.getElementById("income-payment-type").value,
     }),
     expense: () => ({
       sub_budget_id: document.getElementById("expense-subbudget-id").value,
@@ -88,25 +74,44 @@ document.getElementById("create-btn").addEventListener("click", async () => {
       description: document.getElementById("expense-description").value,
       recipient: document.getElementById("expense-recipient").value,
       amount: document.getElementById("expense-amount").value,
-      payment_type: document.getElementById("expense-payment-type").value
-    })
+      payment_type: document.getElementById("expense-payment-type").value,
+    }),
   };
 
-  // Mapping the function to create the data object
   const createData = entityDataCreators[entityType];
 
   if (!createData) {
-    handleError("Create", entityType, "entityType not supported")
+    handleError("Create", entityType, "Entity type not supported");
     return;
   }
 
-  const data = createData();
-
   try {
+    const data = createData();
     const result = await Utils.createEntity(entityType, data);
     handleResult("Create", entityType, result);
-    result ? resultParagraph.innerHTML = "Oggetto creato." : resultParagraph.innerHTML = "C'è stato un problema con la creazione dell'oggetto, riprova."
+    resultParagraph.innerText = result ? "Oggetto creato." : "Errore durante la creazione dell'oggetto.";
   } catch (error) {
     handleError("Create", entityType, error);
   }
-});
+}
+
+async function deleteStuff() {
+  let result = await Utils.softDeleteEntity("category", { 1: 1 })
+    && await Utils.softDeleteEntity("subBudget", { 1: 1 })
+    && await Utils.softDeleteEntity("income", { 1: 1 })
+    && await Utils.softDeleteEntity("expense", { 1: 1 });
+
+  console.log(result);
+}
+
+// Event listeners
+function initializeEventListeners() {
+  document.getElementById("add-new-page").addEventListener("input", handleInputAnimation);
+  document.getElementById("fields-container").addEventListener("input", updateCreateButtonState);
+  document.getElementById("entityType").addEventListener("change", handleEntityTypeChange);
+  document.getElementById("create-btn").addEventListener("click", handleCreateEntity);
+  document.getElementById("delete-btn").addEventListener("click", async () => { await deleteStuff() });
+}
+
+// Initialize event listeners
+initializeEventListeners();
