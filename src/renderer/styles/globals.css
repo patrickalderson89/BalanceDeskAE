@@ -172,11 +172,20 @@ textarea:invalid {
     /* Highlight invalid inputs with error color */
 }
 
-input:invalid:focus,
+
 select:invalid:focus,
 textarea:invalid:focus {
     outline: none;
     box-shadow: 0 0 5px var(--color-error);
+}
+
+
+input:invalid:focus~span{
+    background-color: var(--color-error)!important;
+}
+
+input:invalid:focus + label{
+    color: var(--color-error)!important;
 }
 
 /* Checkbox styles */
