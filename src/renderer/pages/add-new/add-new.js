@@ -31,10 +31,23 @@ function handleInputAnimation(event) {
   }
 }
 
+function cleanUp(){
+  var container = document.getElementById("fields-container");
+  var inputFieds = container.querySelectorAll("input");
+  var selectFieds = container.querySelectorAll("select")
 
+  inputFieds.forEach(input => {
+    input.value = "";
+  });
+
+  selectFieds.forEach(select => {
+    select.innerHTML = select.options[0].outerHTML;
+  });
+}
 
 // Show or hide form fields based on selected entity type
 async function handleEntityTypeChange() {
+  cleanUp()
   const entityType = document.getElementById("entityType").value;
   const fieldsContainer = document.getElementById("fields-container");
 
@@ -54,8 +67,6 @@ async function handleEntityTypeChange() {
       const result = await Utils.readAllEntities("category");
       handleResult("Read", entityType, result);
 
-      select.innerHTML = select.options[0].outerHTML;
-
       result.forEach((obj) => {
         const option = new Option(obj.name, obj.id);
         select.add(option);
@@ -74,8 +85,6 @@ async function handleEntityTypeChange() {
         try{
         const result = await Utils.readEntity("subBudget", {category_id : `${categorySelectValue}`})
         handleResult("Read", "subBudget", result);
-
-        subBudgetSelect.innerHTML = subBudgetSelect.options[0].outerHTML;
 
         result.forEach((obj, index) => {
           console.log(obj.name)
@@ -136,7 +145,19 @@ async function handleCreateEntity() {
     const data = createData();
     const result = await Utils.createEntity(entityType, data);
     handleResult("Create", entityType, result);
-    resultParagraph.innerText = result ? "Oggetto creato." : "Errore durante la creazione dell'oggetto.";
+    if(result){
+      resultParagraph.innerText = "Oggetto creato.";
+      cleanUp()
+
+      setTimeout(() => {
+        resultParagraph.innerText = "";
+    }, 2000);
+    }else{
+      resultParagraph.innerText = "Errore durante la creazione dell'oggetto.";
+      setTimeout(() => {
+        resultParagraph.innerText = "";
+    }, 2000); 
+    }
   } catch (error) {
     handleError("Create", entityType, error);
   }
