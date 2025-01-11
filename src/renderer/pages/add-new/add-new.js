@@ -1,110 +1,124 @@
 // Utility to handle operation results
-function handleResult(operation, entityType, result) {
+function logOperationResult(operation, entityType, result) {
   console.log(`Operation: ${operation} | Entity: ${entityType} | Result:`, result);
 }
 
 // Utility to handle errors
-function handleError(operation, entityType, error) {
+function logOperationError(operation, entityType, error) {
   console.error(`Operation: ${operation} | Entity: ${entityType} | Error:`, error);
 }
 
-// Update the state of the create button based on form validation
-function updateCreateButtonState() {
-  const selectedType = document.getElementById("entityType").value;
-  const requiredFields = document.querySelectorAll(
-    `#${selectedType}-fields input[required], #${selectedType}-fields select[required]`
-  );
-  const createButton = document.getElementById("create-btn");
-
-  const allFieldsValid = Array.from(requiredFields).every((field) => field.checkValidity());
-
-  createButton.disabled = !allFieldsValid;
-}
-
-// Add input animation for form fields
-function handleInputAnimation(event) {
-  const target = event.target;
-  if (target.value) {
-    target.classList.add("animation-active");
-  } else {
-    target.classList.remove("animation-active");
-  }
-}
-
-function cleanUp(){
-  var container = document.getElementById("fields-container");
-  var inputFieds = container.querySelectorAll("input");
-  var selectFieds = container.querySelectorAll("select")
-
-  inputFieds.forEach(input => {
-    input.value = "";
-  });
-
-  selectFieds.forEach(select => {
-    select.innerHTML = select.options[0].outerHTML;
+// Clear all form fields in a specified container
+function clearFormFields(containerId) {
+  const container = document.getElementById(containerId);
+  container.querySelectorAll("input, select").forEach((element) => {
+    element.value = "";
   });
 }
 
-// Show or hide form fields based on selected entity type
-async function handleEntityTypeChange() {
-  cleanUp()
+// Enable or disable the create button based on form validity
+function toggleCreateButtonState(isEnabled) {
+  document.getElementById("create-btn").disabled = !isEnabled;
+}
+
+// Add animation class on field value change
+function toggleInputAnimation(event) {
+  event.target.classList.toggle("animation-active", event.target.value);
+}
+
+// Handle entity type change and update the form accordingly
+async function onEntityTypeChange() {
   const entityType = document.getElementById("entityType").value;
   const fieldsContainer = document.getElementById("fields-container");
 
+  // Hide all field sets initially
   Array.from(fieldsContainer.children).forEach((child) => {
     child.hidden = true;
   });
 
+  // Show the relevant fields for the selected entity type
+  const selectedFieldsContainer = document.getElementById(`${entityType}-fields`);
   if (entityType) {
-    document.getElementById(`${entityType}-fields`).hidden = false;
+    selectedFieldsContainer.hidden = false;
   }
 
-  const container = document.getElementById(`${entityType}-fields`)
-
-  if(entityType !== "category"){
-    try {
-      const select = container.querySelector("select")
-      const result = await Utils.readAllEntities("category");
-      handleResult("Read", entityType, result);
-
-      result.forEach((obj) => {
-        const option = new Option(obj.name, obj.id);
-        select.add(option);
-      });
-
-    } catch (error) {
-      handleError("Read", entityType, error);
-    }
+  // Populate category select if entity type is not "category"
+  if (entityType !== "category") {
+    await populateCategorySelect(selectedFieldsContainer);
   }
-  if(entityType === "income" || entityType === "expense"){
-      document.getElementById(`${entityType}-category`).addEventListener("change" , async () => {
-        const categorySelectValue = container.querySelectorAll("select")[0].value
-        console.log(container.querySelectorAll("select")[0].value)
-        const subBudgetSelect = Array.from(container.querySelectorAll("select"))[1];
 
-        try{
-        const result = await Utils.readEntity("subBudget", {category_id : `${categorySelectValue}`})
-        handleResult("Read", "subBudget", result);
-
-        result.forEach((obj, index) => {
-          console.log(obj.name)
-          const option = new Option(obj.name, index);
-          subBudgetSelect.add(option);
-        });
-
-        } catch (error) {
-          handleError("Read", "subBudget", error);
-        }
-      })
+  // Set up dynamic subBudget selection for income and expense
+  if (["income", "expense"].includes(entityType)) {
+    setUpSubBudgetSelect(selectedFieldsContainer);
   }
 }
 
-// Create entity operation
-async function handleCreateEntity() {
+// Populate the category select dropdown
+async function populateCategorySelect(container) {
+  const select = container.querySelector("select");
+  try {
+    const categories = await Utils.readAllEntities("category");
+    logOperationResult("Read", "category", categories);
+
+    categories.forEach((category) => {
+      const option = new Option(category.name, category.id);
+      select.add(option);
+    });
+  } catch (error) {
+    logOperationError("Read", "category", error);
+  }
+}
+
+// Set up subBudget select for income and expense entities
+function setUpSubBudgetSelect(container) {
+  const subBudgetSelect = container.querySelectorAll("select")[1];
+  container.querySelector("select").addEventListener("change", async (event) => {
+    const categoryId = event.target.value;
+
+    try {
+      const subBudgets = await Utils.readEntity("subBudget", { category_id: categoryId });
+      logOperationResult("Read", "subBudget", subBudgets);
+
+      // Clear existing options
+      subBudgetSelect.innerHTML = "<option value='' disabled selected>Seleziona Sotto bilancio</option>";
+
+      // Populate new options
+      subBudgets.forEach((subBudget) => {
+        const option = new Option(subBudget.name, subBudget.id);
+        subBudgetSelect.add(option);
+      });
+    } catch (error) {
+      logOperationError("Read", "subBudget", error);
+    }
+  });
+}
+
+// Create entity based on selected type and form data
+async function onCreateEntity() {
   const entityType = document.getElementById("entityType").value;
   const resultParagraph = document.getElementById("request-result");
 
-  const entityDataCreators = {
+  const entityData = getEntityData(entityType);
+  if (!entityData) return;
+
+  try {
+    const result = await Utils.createEntity(entityType, entityData);
+    logOperationResult("Create", entityType, result);
+
+    resultParagraph.innerText = result ? "Creazione avvenuta con successo." : "Errore durante la creazione.";
+    clearFormFields("fields-container");
+
+    setTimeout(() => {
+      resultParagraph.innerText = "";
+    }, 2000);
+  } catch (error) {
+    logOperationError("Create", entityType, error);
+  }
+}
+
+// Map entity type to corresponding form data
+function getEntityData(entityType) {
+  const dataCreators = {
     category: () => ({
       name: document.getElementById("category-name").value,
       description: document.getElementById("category-description").value,
@@ -134,42 +148,25 @@ async function handleCreateEntity() {
     }),
   };
 
-  const createData = entityDataCreators[entityType];
-
-  if (!createData) {
-    handleError("Create", entityType, "Entity type not supported");
-    return;
-  }
-
-  try {
-    const data = createData();
-    const result = await Utils.createEntity(entityType, data);
-    handleResult("Create", entityType, result);
-    if(result){
-      resultParagraph.innerText = "Oggetto creato.";
-      cleanUp()
-
-      setTimeout(() => {
-        resultParagraph.innerText = "";
-    }, 2000);
-    }else{
-      resultParagraph.innerText = "Errore durante la creazione dell'oggetto.";
-      setTimeout(() => {
-        resultParagraph.innerText = "";
-    }, 2000); 
-    }
-  } catch (error) {
-    handleError("Create", entityType, error);
-  }
+  return dataCreators[entityType]?.();
 }
 
-// Event listeners
-function initializeEventListeners() {
-  document.getElementById("add-new-page").addEventListener("input", handleInputAnimation);
-  document.getElementById("fields-container").addEventListener("input", updateCreateButtonState);
-  document.getElementById("entityType").addEventListener("change", handleEntityTypeChange);
-  document.getElementById("create-btn").addEventListener("click", handleCreateEntity);
+// Update create button state based on field validation
+function updateCreateButtonState() {
+  const selectedType = document.getElementById("entityType").value;
+  const requiredFields = document.querySelectorAll(`#${selectedType}-fields input[required], #${selectedType}-fields select[required]`);
+  const allFieldsValid = Array.from(requiredFields).every((field) => field.checkValidity());
+
+  toggleCreateButtonState(allFieldsValid);
 }
 
 // Initialize event listeners
+function initializeEventListeners() {
+  document.getElementById("add-new-page").addEventListener("input", toggleInputAnimation);
+  document.getElementById("fields-container").addEventListener("input", updateCreateButtonState);
+  document.getElementById("entityType").addEventListener("change", onEntityTypeChange);
+  document.getElementById("create-btn").addEventListener("click", onCreateEntity);
+}
+
+// Initialize event listeners on page load
 initializeEventListeners();

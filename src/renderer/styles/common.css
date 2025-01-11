@@ -8,13 +8,16 @@
 
 .page-title {
     text-align: center;
+    font-size: 2.5rem;
+    color: var(--color-text-light);
 }
 
 /* Form Group */
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1.5rem;
+    /* Adjusted gap for better spacing */
 }
 
 /* When the label comes before the input, textarea, or select */
@@ -33,6 +36,7 @@ select[required]+label::after {
     color: red;
 }
 
+/* Button loading spinner */
 .btn-loading-spinner {
     display: inline-block;
     width: 20px;
@@ -40,18 +44,18 @@ select[required]+label::after {
     border: 3px solid transparent;
     border-radius: 50%;
     border-top-color: #007bff;
-    /* Adjust color as needed */
     animation: spin 1s linear infinite;
 }
 
+/* Disclaimer text styling */
 .disclaimer {
     font-size: 0.9rem;
     color: var(--color-text-muted);
     margin-top: 10px;
-    /* Space between anything and disclaimer */
     text-align: center;
 }
 
+/* Spinner animation */
 @keyframes spin {
     from {
         transform: rotate(0deg);
@@ -60,4 +64,32 @@ select[required]+label::after {
     to {
         transform: rotate(360deg);
     }
+}
+
+/* Adjustments for form input focus and invalid styles */
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--color-secondary);
+    outline: none;
+}
+
+input:invalid,
+select:invalid,
+textarea:invalid {
+    border-color: var(--color-error);
+}
+
+select:invalid:focus,
+textarea:invalid:focus {
+    outline: none;
+    box-shadow: 0 0 5px var(--color-error);
+}
+
+input:invalid:focus~span {
+    background-color: var(--color-error) !important;
+}
+
+input:invalid:focus+label {
+    color: var(--color-error) !important;
 }
