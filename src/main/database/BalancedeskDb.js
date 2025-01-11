@@ -28,11 +28,6 @@ class BalancedeskDb {
 
             if (!dbExists) {
                 await this.initializeDatabase();
-                await db.run("PRAGMA foreign_keys = ON;", (err) => {
-                    if (err) {
-                        console.error('Failed to enable foreign keys:', err);
-                    }
-                });
             }
 
             // Initialize migrator and apply migrations
@@ -69,6 +64,11 @@ class BalancedeskDb {
      */
     async initializeDatabase() {
         try {
+            this.db.run("PRAGMA foreign_keys = ON;", (err) => {
+                if (err) {
+                    console.error('Failed to enable foreign keys:', err);
+                }
+            });
             const schema = await fs.readFile(this.schemaPath, "utf8");
             await this.execSQL(schema);
             await this.migrator.setCurrentVersion('0', "init_schema");
