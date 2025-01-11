@@ -46,24 +46,47 @@ async function handleEntityTypeChange() {
     document.getElementById(`${entityType}-fields`).hidden = false;
   }
 
-  if(entityType != "category"){
-    try {
-      const select = document.getElementById(`${entityType}-fields`).querySelector("select")
-      const itemToRead = select.id.split("-")[1]
+  const container = document.getElementById(`${entityType}-fields`)
 
-      const result = await Utils.readAllEntities(`${itemToRead}`);
+  if(entityType !== "category"){
+    try {
+      const select = container.querySelector("select")
+      const result = await Utils.readAllEntities("category");
       handleResult("Read", entityType, result);
 
       select.innerHTML = select.options[0].outerHTML;
 
-      result.forEach((obj, index) => {
-        const option = new Option(obj.name, index);
+      result.forEach((obj) => {
+        const option = new Option(obj.name, obj.id);
         select.add(option);
       });
 
     } catch (error) {
       handleError("Read", entityType, error);
     }
+  }
+  if(entityType === "income" || entityType === "expense"){
+      document.getElementById(`${entityType}-category`).addEventListener("change" , async () => {
+        const categorySelectValue = container.querySelectorAll("select")[0].value
+        console.log(container.querySelectorAll("select")[0].value)
+        const subBudgetSelect = Array.from(container.querySelectorAll("select"))[1];
+
+        try{
+        const result = await Utils.readEntity("subBudget", {category_id : `${categorySelectValue}`})
+        handleResult("Read", "subBudget", result);
+
+        subBudgetSelect.innerHTML = subBudgetSelect.options[0].outerHTML;
+
+        result.forEach((obj, index) => {
+          console.log(obj.name)
+          const option = new Option(obj.name, index);
+          subBudgetSelect.add(option);
+        });
+
+        } catch (error) {
+          handleError("Read", "subBudget", error);
+        }
+      })
   }
 }
 
