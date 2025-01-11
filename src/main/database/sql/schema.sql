@@ -148,3 +148,76 @@ WHERE
     sb.is_deleted = 0
 GROUP BY
     sb.id;
+
+-- ========================================================
+-- Trigger: Soft Delete Sub-Budgets and Related Transactions for Category
+-- ========================================================
+CREATE TRIGGER IF NOT EXISTS soft_delete_subbudgets_and_transactions AFTER
+UPDATE OF is_deleted ON categories WHEN NEW.is_deleted = 1 BEGIN
+-- Soft delete sub-budgets linked to the deleted category
+UPDATE sub_budgets
+SET
+    is_deleted = 1,
+    deleted_at = CURRENT_TIMESTAMP
+WHERE
+    category_id = NEW.id
+    AND is_deleted = 0;
+
+-- Soft delete incomes linked to sub-budgets of the deleted category
+UPDATE incomes
+SET
+    is_deleted = 1,
+    deleted_at = CURRENT_TIMESTAMP
+WHERE
+    sub_budget_id IN (
+        SELECT
+            id
+        FROM
+            sub_budgets
+        WHERE
+            category_id = NEW.id
+    )
+    AND is_deleted = 0;
+
+-- Soft delete expenses linked to sub-budgets of the deleted category
+UPDATE expenses
+SET
+    is_deleted = 1,
+    deleted_at = CURRENT_TIMESTAMP
+WHERE
+    sub_budget_id IN (
+        SELECT
+            id
+        FROM
+            sub_budgets
+        WHERE
+            category_id = NEW.id
+    )
+    AND is_deleted = 0;
+
+END;
+
+-- ========================================================
+-- Trigger: Soft Delete Incomes and Expenses for Sub-Budget
+-- ========================================================
+CREATE TRIGGER IF NOT EXISTS soft_delete_incomes_expenses AFTER
+UPDATE OF is_deleted ON sub_budgets WHEN NEW.is_deleted = 1 BEGIN
+-- Soft delete incomes linked to the deleted sub-budget
+UPDATE incomes
+SET
+    is_deleted = 1,
+    deleted_at = CURRENT_TIMESTAMP
+WHERE
+    sub_budget_id = NEW.id
+    AND is_deleted = 0;
+
+-- Soft delete expenses linked to the deleted sub-budget
+UPDATE expenses
+SET
+    is_deleted = 1,
+    deleted_at = CURRENT_TIMESTAMP
+WHERE
+    sub_budget_id = NEW.id
+    AND is_deleted = 0;
+
+END;
