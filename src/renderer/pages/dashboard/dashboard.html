@@ -1,0 +1,44 @@
+<div id="dashboard-page">
+    <base href="dashboard/">
+    <link rel="stylesheet" href="dashboard.css">
+
+    <h1 class="page-title">Pannello di controllo</h1>
+
+    <!-- General Balance Card -->
+    <div class="general-balance-card-container">
+        <div class="general-balance-card">
+            <div class="general-balance-card-info-container">
+                <h2>Bilancio Generale</h2>
+                <p id="categories-count">Categorie: 0</p>
+                <p id="total-incomes">Entrate Totali: €0.00</p>
+                <p id="total-expenses">Uscite Totali: €0.00</p>
+                <p id="total-balance">Totale: €0.00</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Controls and Table (same as before) -->
+    <div class="dashboard-controls">
+        <!-- Search Input -->
+        <input type="text" id="search-input" placeholder="Cerca" />
+        <!-- Create New Entity Button -->
+        <a href="add-new/add-new.html" id="create-entity-btn">Crea nuovo</a>
+    </div>
+
+    <table id="categories-table">
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Entrate Totali</th>
+                <th>Uscite Totali</th>
+                <th>Totale</th>
+                <th>Data di creazione</th>
+                <th>Ultima modifica</th>
+            </tr>
+        </thead>
+        <tbody id="categories-list">
+        </tbody>
+    </table>
+
+    <script src="dashboard.js" async></script>
+</div>
