@@ -31,8 +31,10 @@ function handleInputAnimation(event) {
   }
 }
 
+
+
 // Show or hide form fields based on selected entity type
-function handleEntityTypeChange() {
+async function handleEntityTypeChange() {
   const entityType = document.getElementById("entityType").value;
   const fieldsContainer = document.getElementById("fields-container");
 
@@ -42,6 +44,26 @@ function handleEntityTypeChange() {
 
   if (entityType) {
     document.getElementById(`${entityType}-fields`).hidden = false;
+  }
+
+  if(entityType != "category"){
+    try {
+      const select = document.getElementById(`${entityType}-fields`).querySelector("select")
+      const itemToRead = select.id.split("-")[1]
+
+      const result = await Utils.readAllEntities(`${itemToRead}`);
+      handleResult("Read", entityType, result);
+
+      select.innerHTML = select.options[0].outerHTML;
+
+      result.forEach((obj, index) => {
+        const option = new Option(obj.name, index);
+        select.add(option);
+      });
+
+    } catch (error) {
+      handleError("Read", entityType, error);
+    }
   }
 }
 
@@ -56,12 +78,12 @@ async function handleCreateEntity() {
       description: document.getElementById("category-description").value,
     }),
     subBudget: () => ({
-      category_id: document.getElementById("subBudget-category-id").value,
+      category_id: document.getElementById("subBudget-category").value,
       name: document.getElementById("subBudget-name").value,
       description: document.getElementById("subBudget-description").value,
     }),
     income: () => ({
-      sub_budget_id: document.getElementById("income-subbudget-id").value,
+      sub_budget_id: document.getElementById("income-subBudget").value,
       title: document.getElementById("income-title").value,
       description: document.getElementById("income-description").value,
       source: document.getElementById("income-source").value,
@@ -70,7 +92,7 @@ async function handleCreateEntity() {
       transaction_date: document.getElementById("income-transaction-date").value,
     }),
     expense: () => ({
-      sub_budget_id: document.getElementById("expense-subbudget-id").value,
+      sub_budget_id: document.getElementById("expense-subBudget").value,
       title: document.getElementById("expense-title").value,
       description: document.getElementById("expense-description").value,
       recipient: document.getElementById("expense-recipient").value,
