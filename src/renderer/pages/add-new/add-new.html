@@ -15,8 +15,8 @@
     </select>
 
     <!-- Form fields for different entities -->
-
     <div id="fields-container" class="form-container">
+
       <!-- Category fields -->
       <div id="category-fields" class="entity-form" hidden>
         <div id="input-group" class="input-group">
@@ -30,6 +30,7 @@
           <span class="border"></span>
         </div>
       </div>
+
       <!-- Sub-Budget fields -->
       <div id="subBudget-fields" hidden>
         <select id="subBudget-category" required>
@@ -49,9 +50,16 @@
 
       <!-- Income fields -->
       <div id="income-fields" hidden>
-        <select id="income-subBudget" required>
-          <option value="" disabled selected>Seleziona Sotto bilancio</option>
-        </select>
+        <div id="input-group" class="input-group">
+          <select id="income-category" required>
+            <option value="" disabled selected>Seleziona Categoria</option>
+          </select>
+        </div>
+        <div id="input-group" class="input-group">
+          <select id="income-subBudget" required>
+            <option value="" disabled selected>Seleziona Sotto bilancio</option>
+          </select>
+        </div>
         <div id="input-group" class="input-group">
           <input type="text" id="income-title" required>
           <label for="income-title">Titolo</label>
@@ -68,7 +76,7 @@
           <span class="border"></span>
         </div>
         <div id="input-group" class="input-group">
-          <input type="number" id="income-amount" required step="0.01">
+          <input type="text" id="income-amount" pattern="^\d+(,\d{1,2})?$" required>
           <label for="income-amount">Importo</label>
           <span class="border"></span>
         </div>
@@ -85,9 +93,16 @@
 
       <!-- Expense fields -->
       <div id="expense-fields" hidden>
-        <select id="expense-subBudget" required>
-          <option value="" disabled selected>Seleziona Sotto bilancio</option>
-        </select>
+        <div id="input-group" class="input-group">
+          <select id="expense-category" required>
+            <option value="" disabled selected>Seleziona Categoria</option>
+          </select>
+        </div>
+        <div id="input-group" class="input-group">
+          <select id="expense-subBudget" required>
+            <option value="" disabled selected>Seleziona Sotto bilancio</option>
+          </select>
+        </div>
         <div id="input-group" class="input-group">
           <input type="text" id="expense-title" required>
           <label for="expense-title">Titolo</label>
@@ -104,7 +119,7 @@
           <span class="border"></span>
         </div>
         <div id="input-group" class="input-group">
-          <input type="number" id="expense-amount" required step="0.01">
+          <input type="text" id="expense-amount" pattern="^\d+(,\d{1,2})?$" required>
           <label for="expense-amount">Importo</label>
           <span class="border"></span>
         </div>
