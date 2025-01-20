@@ -68,26 +68,14 @@ function formatDate(dateString) {
 // Filter rows in the categories table based on the search query
 function filterRows(query) {
     const rows = tableBody.getElementsByTagName("tr");
-    const regex = new RegExp(query, "gi"); // Create a case-insensitive search pattern
+    const regex = new RegExp(query, "i"); // Create a case-insensitive search pattern
 
     // Loop through all the rows
     for (const row of rows) {
-        const cells = row.getElementsByTagName("td");
-        let rowMatches = false;
-
-        // Loop through each cell in the row
-        for (const cell of cells) {
-            const cellText = cell.textContent || cell.innerText;
-
-            // Check if the cell content matches the search query
-            if (regex.test(cellText)) {
-                rowMatches = true;
-                break; // No need to check further cells if there’s already a match
-            }
-        }
+        const name = row.getElementsByTagName("td")[0].textContent;
 
         // Hide the row if it doesn’t match the search query
-        row.style.display = rowMatches ? '' : "none";
+        row.style.display = regex.test(name) ? "" : "none";
     }
 }
 
