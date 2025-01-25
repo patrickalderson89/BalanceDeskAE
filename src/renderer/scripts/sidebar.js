@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const sidebar = document.getElementById("sidebar");
     const sidebarToggleBtn = document.getElementById("sidebar-toggle");
     const mainContent = document.getElementById("main-content");
+    const footer = document.getElementById("footer");
 
     // ============================
     // SECTION 2: INITIALIZATION
@@ -29,11 +30,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     // SECTION 3: EVENT LISTENERS
     // ============================
 
-    // Handle changes in the current-page input
-    currentPageInput.addEventListener("change", async () => {
-        await onNavigation(currentPageInput.value);
-    });
-
     // Add event listener for sidebar toggle button
     sidebarToggleBtn.addEventListener("click", function () {
         toggleSidebarState();
@@ -42,15 +38,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Add event listeners for sidebar links to update the input value
     const sidebarLinks = document.querySelectorAll(".sidebar .top-item, .sidebar .nav-item, .sidebar .bottom-item");
 
-    sidebarLinks.forEach((link) => {
-        link.addEventListener("click", (event) => {
+    sidebarLinks.forEach(async (link) => {
+        link.addEventListener("click", async (event) => {
             event.preventDefault();
             const href = link.getAttribute("href");
             if (href && href !== '#') {
                 if (currentPageInput.value !== href) {
-                    previousPageInput.value = currentPageInput.value; // Update previous-page input
-                    currentPageInput.value = href; // Update current-page input
-                    currentPageInput.dispatchEvent(new Event("change")); // Trigger change event manually
+                    Utils.setPages(currentPageInput.value, href);
+                    await onNavigation(currentPageInput.value);
                 }
             }
         });
@@ -68,9 +63,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         if (sidebar.classList.contains("sidebar-closed")) {
             mainContent.style.marginLeft = "80px"; // Sidebar closed
+            footer.style.marginLeft = "80px";
             sidebarToggleBtn.title = "Espandi"; // Tooltip for expand
         } else {
             mainContent.style.marginLeft = "150px"; // Sidebar open
+            footer.style.marginLeft = "150px";
             sidebarToggleBtn.title = "Riduci"; // Tooltip for collapse
         }
     }

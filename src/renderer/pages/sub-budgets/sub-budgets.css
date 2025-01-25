@@ -1,0 +1,17 @@
+#sub-budgets-page {
+    .details {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    #header-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #header-container h2 {
+        margin-bottom: unset;
+    }
+}

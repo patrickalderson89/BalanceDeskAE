@@ -1,5 +1,6 @@
 #categories-page {
-    h1 {
-        text-align: center;
+    .details {
+        text-decoration: underline;
+        cursor: pointer;
     }
 }

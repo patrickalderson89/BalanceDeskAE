@@ -50,19 +50,11 @@ function populateCategoriesTable(categories) {
             <td>${category.total_incomes}€</td>
             <td>${category.total_expenses}€</td>
             <td>${category.total_incomes - category.total_expenses}€</td>
-            <td>${formatDate(category.created_at)}</td>
-            <td>${formatDate(category.updated_at)}</td>
         `;
 
         // Append the row to the table
         tableBody.appendChild(row);
     });
-}
-
-// Format the date for display in a user-friendly format (Italian style)
-function formatDate(dateString) {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return new Date(dateString).toLocaleDateString("it-IT", options);
 }
 
 // Filter rows in the categories table based on the search query

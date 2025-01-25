@@ -1,0 +1,50 @@
+<div id="expense-page">
+    <base href="expense/">
+    <link rel="stylesheet" href="expense.css">
+
+    <h1 class="page-title">Entrata</h1>
+
+    <!-- expense Details Form -->
+    <form id="expense-form">
+        <div class="form-field">
+            <label for="expense-title">Titolo:</label>
+            <input type="text" id="expense-title" name="title" required>
+        </div>
+
+        <div class="form-field">
+            <label for="expense-description">Descrizione:</label>
+            <textarea id="expense-description" name="description"></textarea>
+        </div>
+
+        <div class="form-field">
+            <label for="expense-recipient">A:</label>
+            <input type="text" id="expense-recipient" name="recipient">
+        </div>
+
+        <div class="form-field">
+            <label for="expense-amount">Importo:</label>
+            <input type="text" id="expense-amount" name="amount" required>
+        </div>
+
+        <div class="form-field">
+            <label for="expense-payment-type">Tipo di pagamento:</label>
+            <select id="expense-payment-type" name="payment_type" required>
+                <option value="cash">Contante</option>
+                <option value="bank">Banca</option>
+            </select>
+        </div>
+
+        <div class="form-field">
+            <label for="expense-transaction-date">Data della transazione:</label>
+            <input type="date" id="expense-transaction-date" name="transaction_date" required>
+        </div>
+
+        <!-- Update and Delete Buttons -->
+        <div class="form-actions">
+            <button type="button" id="update-expense">Aggiorna</button>
+            <button type="button" id="delete">Elimina</button>
+        </div>
+    </form>
+
+    <script src="expense.js" async></script>
+</div>

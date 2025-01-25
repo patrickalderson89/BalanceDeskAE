@@ -1,35 +1,4 @@
 #trash-page {
-
-    /* Styling for the warning message */
-    .warning {
-        color: var(--color-error);
-        text-align: center;
-        padding: 10px;
-        font-size: 1.1em;
-    }
-
-    /* Styling for the table */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-    }
-
-    /* Table header and body styling */
-    table th,
-    table td {
-        padding: 12px;
-        text-align: left;
-        color: var(--color-text-primary);
-        border-bottom: 1px solid var(--color-border);
-    }
-
-    /* Row hover effect */
-    table tr:hover {
-        background-color: rgba(0, 0, 0, 0.05);
-        /* Light gray hover */
-    }
-
     .entity-header {
         font-weight: bold;
         text-align: center;

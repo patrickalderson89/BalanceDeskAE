@@ -221,3 +221,76 @@ WHERE
     AND is_deleted = 0;
 
 END;
+
+-- ========================================================
+-- Trigger: Restore Sub-Budgets and Related Transactions for Category
+-- ========================================================
+CREATE TRIGGER IF NOT EXISTS restore_subbudgets_and_transactions AFTER
+UPDATE OF is_deleted ON categories WHEN NEW.is_deleted = 0 BEGIN
+-- Restore sub-budgets linked to the restored category
+UPDATE sub_budgets
+SET
+    is_deleted = 0,
+    deleted_at = NULL
+WHERE
+    category_id = NEW.id
+    AND is_deleted = 1;
+
+-- Restore incomes linked to sub-budgets of the restored category
+UPDATE incomes
+SET
+    is_deleted = 0,
+    deleted_at = NULL
+WHERE
+    sub_budget_id IN (
+        SELECT
+            id
+        FROM
+            sub_budgets
+        WHERE
+            category_id = NEW.id
+    )
+    AND is_deleted = 1;
+
+-- Restore expenses linked to sub-budgets of the restored category
+UPDATE expenses
+SET
+    is_deleted = 0,
+    deleted_at = NULL
+WHERE
+    sub_budget_id IN (
+        SELECT
+            id
+        FROM
+            sub_budgets
+        WHERE
+            category_id = NEW.id
+    )
+    AND is_deleted = 1;
+
+END;
+
+-- ========================================================
+-- Trigger: Restore Incomes and Expenses for Sub-Budget
+-- ========================================================
+CREATE TRIGGER IF NOT EXISTS restore_incomes_expenses AFTER
+UPDATE OF is_deleted ON sub_budgets WHEN NEW.is_deleted = 0 BEGIN
+-- Restore incomes linked to the restored sub-budget
+UPDATE incomes
+SET
+    is_deleted = 0,
+    deleted_at = NULL
+WHERE
+    sub_budget_id = NEW.id
+    AND is_deleted = 1;
+
+-- Restore expenses linked to the restored sub-budget
+UPDATE expenses
+SET
+    is_deleted = 0,
+    deleted_at = NULL
+WHERE
+    sub_budget_id = NEW.id
+    AND is_deleted = 1;
+
+END;

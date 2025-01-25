@@ -188,7 +188,8 @@
 }
 
 /* Footer */
-footer {
+#footer {
+    margin-left: 150px;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -198,6 +199,6 @@ footer {
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 }
 
-footer p {
+#footer p {
     margin-bottom: unset;
 }

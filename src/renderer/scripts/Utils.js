@@ -9,14 +9,70 @@ class Utils {
         }
     }
 
+    // Format the date for display in a user-friendly format (Italian style)
+    static formatDate(dateString) {
+        const options = { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric" };
+        return new Date(dateString).toLocaleDateString("it-IT", options);
+    }
+
+    // Update the properties of the previous and current pages
+    static setPages(previous, current) {
+        const previousField = document.getElementById("previous-page");
+        const currentField = document.getElementById("current-page");
+
+        if (previousField && currentField) {
+            previousField.value = previous;
+            currentField.value = current;
+
+            console.log("Set pages to: \n\tPrevious: " + previous + "\n\tCurrent: " + current);
+
+            return true;
+        }
+
+        console.error("Unable to set pages.");
+
+        return false;
+    }
+
+    // Update the properties of the current item
+    static setCurrentItem(type, id) {
+        const typeField = document.getElementById("current-item-type");
+        const idField = document.getElementById("current-item-id");
+
+        if (typeField && idField) {
+            typeField.value = type;
+            idField.value = id;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    // Retrieve the properties of the current item
+    static getCurrentItem() {
+        const typeField = document.getElementById("current-item-type");
+        const idField = document.getElementById("current-item-id");
+
+        if (typeField && idField) {
+            return {
+                type: typeField.value,
+                id: idField.value
+            };
+        }
+
+        return false;
+    }
+
     // Function to load HTML content dynamically
-    static async loadPageHTMLContent(pageUrl, containerId) {
+    static async loadPageHTMLContent(pageUrl, containerId = "main-content") {
         let success = false;
+        const container = document.getElementById(containerId);
+        container.style.visibility = "hidden";
         try {
             const response = await fetch(pageUrl);
             const html = await response.text();
 
-            const container = document.getElementById(containerId);
             container.innerHTML = html;
 
             container.querySelectorAll("script").forEach((oldScript) => {
@@ -34,6 +90,7 @@ class Utils {
             console.error(`Error loading content ${error}.`);
         }
 
+        container.style.visibility = "visible";
         return success;
     }
 

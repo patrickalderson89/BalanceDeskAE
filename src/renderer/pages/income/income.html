@@ -1,0 +1,50 @@
+<div id="income-page">
+    <base href="income/">
+    <link rel="stylesheet" href="income.css">
+
+    <h1 class="page-title">Entrata</h1>
+
+    <!-- Income Details Form -->
+    <form id="income-form">
+        <div class="form-field">
+            <label for="income-title">Titolo:</label>
+            <input type="text" id="income-title" name="title" required>
+        </div>
+
+        <div class="form-field">
+            <label for="income-description">Descrizione:</label>
+            <textarea id="income-description" name="description"></textarea>
+        </div>
+
+        <div class="form-field">
+            <label for="income-source">Da:</label>
+            <input type="text" id="income-source" name="source">
+        </div>
+
+        <div class="form-field">
+            <label for="income-amount">Importo:</label>
+            <input type="text" id="income-amount" name="amount" required>
+        </div>
+
+        <div class="form-field">
+            <label for="income-payment-type">Tipo di pagamento:</label>
+            <select id="income-payment-type" name="payment_type" required>
+                <option value="cash">Contante</option>
+                <option value="bank">Banca</option>
+            </select>
+        </div>
+
+        <div class="form-field">
+            <label for="income-transaction-date">Data della transazione:</label>
+            <input type="date" id="income-transaction-date" name="transaction_date" required>
+        </div>
+
+        <!-- Update and Delete Buttons -->
+        <div class="form-actions">
+            <button type="button" id="update-income">Aggiorna</button>
+            <button type="button" id="delete">Elimina</button>
+        </div>
+    </form>
+
+    <script src="income.js" async></script>
+</div>

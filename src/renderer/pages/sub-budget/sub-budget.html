@@ -1,0 +1,100 @@
+<div id="sub-budget-page">
+    <base href="sub-budget/">
+    <link rel="stylesheet" href="sub-budget.css">
+
+    <h1 class="page-title">Sotto Bilancio</h1>
+
+    <div class="sub-budget-details">
+        <div class="sub-budget-field">
+            <label for="sub-budget-name">Nome:</label>
+            <input type="text" id="sub-budget-name" value="" minlength="1" pattern="[a-zA-Z0-9 ]+" required />
+        </div>
+
+        <div class="sub-budget-field">
+            <label for="sub-budget-description">Descrizione:</label>
+            <textarea id="sub-budget-description" minlength="1"></textarea>
+        </div>
+
+        <div class="sub-budget-field">
+            <label>Entrate:</label>
+            <span id="sub-budget-total-incomes"></span>
+        </div>
+
+        <div class="sub-budget-field">
+            <label>Uscite:</label>
+            <span id="sub-budget-total-expenses"></span>
+        </div>
+
+        <div class="sub-budget-field">
+            <label>Totale:</label>
+            <span id="sub-budget-total"></span>
+        </div>
+
+        <div class="sub-budget-field">
+            <label>Categoria:</label>
+            <span id="sub-budget-category"></span>
+        </div>
+
+        <div class="sub-budget-field">
+            <label>Creata:</label>
+            <span id="sub-budget-created-at"></span>
+        </div>
+
+        <div class="sub-budget-field">
+            <label>Modificata:</label>
+            <span id="sub-budget-updated-at"></span>
+        </div>
+
+        <!-- Result message display -->
+        <div id="update-result" class="sub-budget-field" style="display: none;">
+            <span id="result-message"></span>
+        </div>
+
+        <div class="sub-budget-field">
+            <button id="update-sub-budget" disabled>Salva</button>
+        </div>
+        <div class="sub-budget-field">
+            <button id="delete">Elimina</button>
+        </div>
+    </div>
+
+    <table id="sub-budget-incomes-table">
+        <thead>
+            <tr>
+                <caption>Entrate</caption>
+            </tr>
+            <tr>
+                <th>Titolo</th>
+                <th>Descrizione</th>
+                <th>Da</th>
+                <th>Importo</th>
+                <th>Pagamento</th>
+                <th>Data</th>
+                <th>Dettagli</th>
+            </tr>
+        </thead>
+        <tbody id="sub-budget-incomes-table-body">
+        </tbody>
+    </table>
+
+    <table id="sub-budget-expenses-table">
+        <thead>
+            <tr>
+                <caption>Uscite</caption>
+            </tr>
+            <tr>
+                <th>Titolo</th>
+                <th>Descrizione</th>
+                <th>A</th>
+                <th>Importo</th>
+                <th>Pagamento</th>
+                <th>Data</th>
+                <th>Dettagli</th>
+            </tr>
+        </thead>
+        <tbody id="sub-budget-expenses-table-body">
+        </tbody>
+    </table>
+
+    <script src="sub-budget.js" async></script>
+</div>

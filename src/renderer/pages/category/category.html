@@ -1,0 +1,45 @@
+<div id="category-page">
+    <base href="category/">
+    <link rel="stylesheet" href="category.css">
+
+    <h1 class="page-title">Categoria</h1>
+
+    <div class="category-details">
+        <div class="category-field">
+            <label for="category-name">Nome:</label>
+            <input type="text" id="category-name" value="" minlength="1" pattern="[a-zA-Z0-9 ]+" required />
+        </div>
+
+        <div class="category-field">
+            <label for="category-description">Descrizione:</label>
+            <textarea id="category-description" minlength="1"></textarea>
+        </div>
+
+        <div class="category-field">
+            <label>Creata:</label>
+            <span id="category-created-at"></span>
+        </div>
+
+        <div class="category-field">
+            <label>Modificata:</label>
+            <span id="category-updated-at"></span>
+        </div>
+
+        <!-- Result message display -->
+        <div id="update-result" class="category-field" style="display: none;">
+            <span id="result-message"></span>
+        </div>
+
+        <div class="category-field">
+            <button id="update-category" disabled>Salva</button>
+        </div>
+        <div class="category-field">
+            <button id="view-sub-budgets">Visualizza sotto bilanci</button>
+        </div>
+        <div class="category-field">
+            <button id="delete">Elimina</button>
+        </div>
+    </div>
+
+    <script src="category.js" async></script>
+</div>

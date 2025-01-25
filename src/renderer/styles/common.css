@@ -12,6 +12,10 @@
     color: var(--color-text-light);
 }
 
+button#delete {
+    background-color: var(--color-error);
+}
+
 /* Form Group */
 .form-group {
     display: flex;

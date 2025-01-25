@@ -1,0 +1,85 @@
+#expense-page {
+    max-width: 800px;
+    margin: 2rem auto;
+    background-color: var(--color-background-alt);
+    padding: 2rem;
+    box-shadow: 0 4px 8px var(--color-shadow);
+    border-radius: 8px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+}
+
+#expense-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-field label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-secondary);
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 5px var(--color-primary);
+    outline: none;
+}
+
+.form-field textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.form-field span {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    color: var(--color-text-muted);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.form-actions button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    background-color: var(--color-secondary);
+    color: var(--color-background);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-actions button:hover {
+    background-color: var(--color-hover);
+    box-shadow: 0 2px 5px var(--color-shadow);
+}
