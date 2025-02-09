@@ -11,8 +11,8 @@ module.exports = {
         // Define CRUD operations
         const operations = {
             create: async (tableName, data) => { return await orm.insert(tableName, data) },
-            read: async (tableName, conditions, columns, deleted) => {
-                return await orm.select(tableName, conditions, columns, deleted)
+            read: async (tableName, conditions, columns, deleted, orderby, order) => {
+                return await orm.select(tableName, conditions, columns, deleted, orderby, order)
             },
             update: async (tableName, data, conditions) => { return await orm.update(tableName, data, conditions) },
             delete: async (tableName, conditions) => { return await orm.delete(tableName, conditions) },
@@ -45,6 +45,14 @@ module.exports = {
         ipcMain.handle("getSubBudgetTotals", async (event, ID) => {
             try {
                 return await orm.getSubBudgetTotals(ID);
+            } catch {
+                console.error(`Error handling ${channel}:`, error);
+                return false;
+            }
+        });
+        ipcMain.handle("getTotalBalancePerPaymentType", async (event, paymentType) => {
+            try {
+                return await orm.getTotalBalancePerPaymentType(paymentType);
             } catch {
                 console.error(`Error handling ${channel}:`, error);
                 return false;

@@ -19,7 +19,7 @@ class SimpleORM {
     }
 
     // Select records with optional conditions
-    async select(tableName, conditions = {}, columns = ["*"], deleted = false) {
+    async select(tableName, conditions = {}, columns = ["*"], deleted = false, orderby = false, order = false) {
         if (!deleted) {
             conditions["is_deleted"] = 0;
         }
@@ -32,6 +32,13 @@ class SimpleORM {
         if (conditionKeys.length > 0) {
             const whereClause = conditionKeys.map(key => `${key} = ?`).join(" AND ");
             sql += ` WHERE ${whereClause}`;
+        }
+
+        if (orderby) {
+            if (order !== "ASC" && order !== "DESC") {
+                order = "ASC";
+            }
+            sql += ` ORDER BY ${orderby} ${order}`;
         }
 
         return new Promise((resolve, reject) => {
@@ -130,6 +137,30 @@ class SimpleORM {
                     return reject(err);
                 }
                 resolve(rows);
+            });
+        });
+    }
+
+    async getTotalBalancePerPaymentType(paymentType) {
+        let sql = `
+            SELECT 
+                COALESCE((SELECT SUM(amount) FROM incomes WHERE payment_type = ?), 0) 
+                - 
+                COALESCE((SELECT SUM(amount) FROM expenses WHERE payment_type = ?), 0) 
+            AS total_balance
+        `;
+
+        // Ensure payment type is valid
+        if (paymentType !== "bank" && paymentType !== "cash") {
+            paymentType = "bank";
+        }
+
+        return new Promise((resolve, reject) => {
+            this.db.get(sql, [paymentType, paymentType], (err, row) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(row.total_balance || 0); // Ensure it returns 0 if no records exist
             });
         });
     }

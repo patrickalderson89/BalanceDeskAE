@@ -60,9 +60,16 @@ async function populateCategorySelect(container) {
     const categories = await Utils.readAllEntities("category");
     logOperationResult("Read", "category", categories);
 
+    let optionValues = [];
+    Array.from(select.options).forEach(option => {
+      optionValues.push(Number(option.value));
+    });
+
     categories.forEach((category) => {
-      const option = new Option(category.name, category.id);
-      select.add(option);
+      if (!optionValues.includes(category.id)) {
+        const option = new Option(category.name, category.id);
+        select.add(option);
+      }
     });
   } catch (error) {
     logOperationError("Read", "category", error);

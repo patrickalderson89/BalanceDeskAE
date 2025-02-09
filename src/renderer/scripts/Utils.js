@@ -11,8 +11,17 @@ class Utils {
 
     // Format the date for display in a user-friendly format (Italian style)
     static formatDate(dateString) {
-        const options = { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric" };
-        return new Date(dateString).toLocaleDateString("it-IT", options);
+        const date = new Date(dateString);
+        // create a DateTimeFormat object with specific options
+        var dateFormat = new Intl.DateTimeFormat("it-IT", {
+            timeZone: "Europe/Rome",
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric"
+        });
+        return dateFormat.format(date);
     }
 
     // Update the properties of the previous and current pages
@@ -156,9 +165,11 @@ class Utils {
      * @param {object} conditions - The conditions to filter the read operation.
      * @param {string[]} columns - The columns to retrieve. Default to all.
      * @param {boolean} deleted - Whether to include deleted entities. Default false.
+     * @param {boolean|string} orderby - Whether to order the items to retrieve by a specific column. Default false.
+     * @param {boolean|string} order - Order in which the items should be retrieved. Default false.
      * @returns {Promise<boolean|any>} - The result of the read operation.
      */
-    static async readEntity(type, conditions, columns = ["*"], deleted = false) {
+    static async readEntity(type, conditions, columns = ["*"], deleted = false, orderby = false, order = false) {
         const { database } = window;
 
         if (!database) {
@@ -174,7 +185,7 @@ class Utils {
         }
 
         try {
-            const result = await database[readMethod](conditions, columns, deleted);
+            const result = await database[readMethod](conditions, columns, deleted, orderby, order);
             return result;
         } catch (error) {
             console.error(`Error reading entity "${type}":`, error);
@@ -383,6 +394,28 @@ class Utils {
             return subBudgetId ? totals[0] : totals;
         } catch (error) {
             console.error(`Error fetching sub-budget totals for ID "${subBudgetId}":`, error);
+            return null;
+        }
+    }
+
+    static async getTotalBalancePerPaymentType(paymentType) {
+        const { database } = window;
+
+        if (!database) {
+            console.error("Database interface is not available.");
+            return null;
+        }
+
+        if (typeof database.getTotalBalancePerPaymentType !== "function") {
+            console.error(`Method 'getTotalBalancePerPaymentType' is not defined in the database interface.`);
+            return null;
+        }
+
+        try {
+            const total = await database.getTotalBalancePerPaymentType(paymentType);
+            return total;
+        } catch (error) {
+            console.error(`Error fetching total balance per payment type "${paymentType}":`, error);
             return null;
         }
     }

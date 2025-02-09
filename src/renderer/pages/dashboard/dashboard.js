@@ -32,7 +32,7 @@ async function fetchCategories() {
     populateCategoriesTable(categoriesWithTotals);
 
     // Update the general balance card with the total information
-    updateGeneralBalanceCard(categoriesWithTotals);
+    await updateGeneralBalanceCard(categoriesWithTotals);
 }
 
 // Populate the categories table with data
@@ -111,7 +111,7 @@ document.getElementById("create-entity-btn").addEventListener("click", async (e)
 fetchCategories();
 
 // Function to update the general balance card
-function updateGeneralBalanceCard(categories) {
+async function updateGeneralBalanceCard(categories) {
     const categoriesCount = categories.length;
     let totalIncomes = 0;
     let totalExpenses = 0;
@@ -123,10 +123,14 @@ function updateGeneralBalanceCard(categories) {
     });
 
     const totalBalance = totalIncomes - totalExpenses;
+    const totalBalanceBank = await Utils.getTotalBalancePerPaymentType("bank");
+    const totalBalanceCash = await Utils.getTotalBalancePerPaymentType("cash");
 
     // Update the values in the card
     document.getElementById("categories-count").textContent = `Categorie: ${categoriesCount}`;
     document.getElementById("total-incomes").textContent = `Entrate Totali: €${totalIncomes.toFixed(2)}`;
     document.getElementById("total-expenses").textContent = `Uscite Totali: €${totalExpenses.toFixed(2)}`;
     document.getElementById("total-balance").textContent = `Totale: €${totalBalance.toFixed(2)}`;
+    document.getElementById("total-balance-bank").textContent = `€${totalBalanceBank.toFixed(2)}`;
+    document.getElementById("total-balance-cash").textContent = `€${totalBalanceCash.toFixed(2)}`;
 }
