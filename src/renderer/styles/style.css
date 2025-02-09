@@ -67,8 +67,9 @@
 }
 
 .top-icon {
-    width: 50%;
+    width: 75%;
     height: auto;
+    border-radius: 50%;
 }
 
 .sidebar-middle {
