@@ -27,8 +27,8 @@ async function getSubBudgetData() {
 
 async function getIncomesExpenses(sbId) {
     try {
-        const incomes = await Utils.readEntity("income", { sub_budget_id: sbId });
-        const expenses = await Utils.readEntity("expense", { sub_budget_id: sbId });
+        const incomes = await Utils.readEntity("income", { sub_budget_id: sbId }, ['*'], false, "transaction_date", "ASC");
+        const expenses = await Utils.readEntity("expense", { sub_budget_id: sbId }, ['*'], false, "transaction_date", "ASC");
 
         return [incomes, expenses];
     } catch {

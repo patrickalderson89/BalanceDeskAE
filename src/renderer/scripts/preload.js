@@ -12,7 +12,7 @@ const createExposeMethods = (entities) => {
 
         // Create methods for each operation (create, read, update, delete)
         exposedMethods[`create${operation}`] = async (data) => { return await ipcRenderer.invoke(`create-${operationLower}`, data) };
-        exposedMethods[`read${operation}`] = async (conditions, columns, deleted) => { return await ipcRenderer.invoke(`read-${operationLower}`, conditions, columns, deleted) };
+        exposedMethods[`read${operation}`] = async (conditions, columns, deleted, orderby, order) => { return await ipcRenderer.invoke(`read-${operationLower}`, conditions, columns, deleted, orderby, order) };
         exposedMethods[`readAll${operation}`] = async (deleted) => { return await ipcRenderer.invoke(`read-${operationLower}`, {}, ['*'], deleted) };
         exposedMethods[`update${operation}`] = async (data, conditions) => { return await ipcRenderer.invoke(`update-${operationLower}`, data, conditions) };
         exposedMethods[`delete${operation}`] = async (conditions) => { return await ipcRenderer.invoke(`delete-${operationLower}`, conditions) };
@@ -22,6 +22,7 @@ const createExposeMethods = (entities) => {
 
     exposedMethods["getCategoryTotals"] = async (ID) => { return await ipcRenderer.invoke("getCategoryTotals", ID) };
     exposedMethods["getSubBudgetTotals"] = async (ID) => { return await ipcRenderer.invoke("getSubBudgetTotals", ID) };
+    exposedMethods["getTotalBalancePerPaymentType"] = async (paymentType) => { return await ipcRenderer.invoke("getTotalBalancePerPaymentType", paymentType) };
 
     return exposedMethods;
 };
