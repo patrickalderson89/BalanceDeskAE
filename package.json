@@ -13,7 +13,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^33.2.1"
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,6 @@
   },
   "homepage": "https://github.com/patrickalderson89/BalanceDesk#readme",
   "dependencies": {
-    "i18next": "^24.1.0",
-    "i18next-electron-fs-backend": "^3.0.2",
     "sqlite3": "^5.1.7"
   }
 }
