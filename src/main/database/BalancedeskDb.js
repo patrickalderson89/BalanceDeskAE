@@ -1,3 +1,4 @@
+const { app } = require("electron"); // Importa app di Electron
 const sqlite3 = require("sqlite3").verbose();
 const fs = require("fs/promises");
 const path = require("path");
@@ -6,14 +7,15 @@ const SimpleORM = require("./SimpleORM");
 
 class BalancedeskDb {
     constructor(dbName) {
+        const userDataPath = app.getPath("userData"); // Percorso sicuro scrivibile
         this.dbName = dbName;
-        this.dbPath = path.join(__dirname, "sql", `${dbName}.db`);
+        this.dbPath = path.join(userDataPath, `${dbName}.db`); // Salva il DB nella cartella utente
         this.schemaPath = path.join(__dirname, "sql", "schema.sql");
         this.migrationsPath = path.join(__dirname, "sql", "migrations");
         this.rollbacksPath = path.join(__dirname, "sql", "rollbacks");
-        this.db = null; // Holds the database instance
-        this.migrator = null; // Holds the Migrator instance
-        this.orm = null // Holds the SimpleORM instance
+        this.db = null;
+        this.migrator = null;
+        this.orm = null;
     }
 
     /**
